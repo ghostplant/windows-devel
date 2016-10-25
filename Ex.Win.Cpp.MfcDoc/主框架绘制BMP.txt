@@ -1,0 +1,26 @@
+OnCreate()
+{
+	CClientDC dc(this); //定义CClientDC
+	OnPrepareDC(&dc); //准备CClientDC
+
+	CBitmap *pBmp=new CBitmap; //定义CBitmap
+	pBmp->LoadBitmap(IDB_NAME); //载入CBitmap
+
+	CDC *pDDC=new CDC; //定义CDC
+	CBitmap *pOBmp=(CBitmap*)(pDDC->SelectObject(pBmp)); //转换
+
+	HBITMAP hBmp; //定义HBITMAP
+	hBmp=(HBITMAP)pOBmp->GetSafeHandle();
+
+
+	BITMAP bm; //定义BITMAP
+	pBmp->GetObject(sizeof(bm),&bm); //BITMAP结构
+
+	CRect rt(0,0,bm.bmWidth,bm.bmHeight); //BITMAP的长宽
+	dc.DPtoLP(&rt);
+}
+
+OnDraw()
+{
+	pDC->StretchBlt(100,-100,bm.bmWidth/*原始宽*/,bm.bmHeight/*原始长*/,pDDC,0,0,bm.bmWidth/*实际宽*/,bm.bmHeight/*实际长*/,SRCCOPY);
+}

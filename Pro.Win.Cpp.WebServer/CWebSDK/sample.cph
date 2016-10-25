@@ -1,0 +1,32 @@
+<@ include="stdio.h" include="stdlib.h" include="time.h" param="param" page="page" @>
+<html>
+<body><div>服务器随机数：
+<%
+	srand(time(0)),rand();
+	static char digit[32];
+	static int times=0;
+	sprintf(digit,"%d</div>",rand());
+	strcat(page,digit);
+	char *prev=param, *split;
+	// 将传递参数迭代并显示出来
+	do {
+		split=strchr(prev,'\n');
+		strcat(page,"<div>");
+		if (split)
+			*split=0;
+		strcat(page,prev);
+		strcat(page,"</div>");
+		prev=split+1;
+	} while (split);
+%>
+<form action='/sample?times=<% sprintf(digit,"%d",++times);strcat(page,digit); %>' method="post">
+<input name="你好1，textbox！"/>
+<input name="你好2，textbox！"/>
+<input type="submit"/>
+</form>
+<form action="/sample">
+<input name="你好，blank！"/>
+<input type="submit"/>
+</form>
+</body>
+</html>

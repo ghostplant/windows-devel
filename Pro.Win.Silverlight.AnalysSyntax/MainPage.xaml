@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="语法分析器.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="700" d:DesignWidth="1200" xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid Name="gridFrame" HorizontalAlignment="Stretch" Background="#6D005FE4" VerticalAlignment="Stretch" Height="657" Width="1200">
+        <TextBlock Height="42" HorizontalAlignment="Center" Name="lbTitle" VerticalAlignment="Top" Width="274" Text="语法分析器 - LR(1)" Margin="0,12,0,0" Foreground="Red" FontSize="26" />
+        <HyperlinkButton Content="关于作者"  HorizontalAlignment="Center" Margin="609,22,217,0" Name="about" VerticalAlignment="Top" Width="75" Click="about_Click" Foreground="#FFD8D373" FontWeight="Bold" FontSize="16" />
+        <TextBlock Height="22" HorizontalAlignment="Center" Margin="36,60,381,0" Name="label1" VerticalAlignment="Top" Width="483" Text="规定：'|'为逻辑或，'Φ'为构造初态VN，'→'为推出，其他非空格、TAB的单字符可用，空串表示为" />
+        <TextBox Height="23" HorizontalAlignment="Center" Margin="36,185,824,0" Name="rfrom" VerticalAlignment="Top" Width="40" TextChanged="rfrom_TextChanged" />
+        <TextBlock Text="→" Height="22" HorizontalAlignment="Center" Margin="88,187,792,0" Name="label2" VerticalAlignment="Top" Width="20" />
+        <TextBox Height="23" HorizontalAlignment="Center" Margin="116,185,679,0" Name="rdest" VerticalAlignment="Top" Width="105" TextChanged="rdest_TextChanged" />
+        <Button Content="添加" HorizontalAlignment="Center" Margin="146,225,679,0" Name="insert" VerticalAlignment="Top" Width="75" Click="insert_Click" />
+        <ListBox Height="198" HorizontalAlignment="Center" Margin="35,261,679,0" Name="lstProduce" VerticalAlignment="Top" Width="186" />
+        <Button Content="清空" HorizontalAlignment="Center" Margin="35,224,790,0" Name="clear" VerticalAlignment="Top" Width="75" Click="clear_Click" />
+        <TextBlock Height="21" HorizontalAlignment="Center" Margin="36,0,824,514" Name="label3" VerticalAlignment="Bottom" Width="40" Text="终结符：" />
+        <TextBox Height="23" HorizontalAlignment="Center" Margin="116,120,679,0" Name="terminator" VerticalAlignment="Top" Width="105" IsReadOnly="True" />
+        <TextBlock Text="非终结符：" Height="21" HorizontalAlignment="Center" Margin="36,92,813,0" Name="label4" VerticalAlignment="Top" Width="51" />
+        <TextBox Height="23" HorizontalAlignment="Center" Margin="116,88,679,0" Name="nterminator" VerticalAlignment="Top" Width="105" IsReadOnly="True" TextChanged="nterminator_TextChanged" />
+        <TextBlock Text="产生式：" Height="21" HorizontalAlignment="Center" Margin="35,158,778,0" Name="label5" VerticalAlignment="Top" Width="87" />
+        <Button Content="一键分析与验证" HorizontalAlignment="Center" Margin="36,567,679,0" Name="analyze" VerticalAlignment="Top" Width="185" Click="analyze_Click" />
+        <ComboBox Height="23" HorizontalAlignment="Center" Margin="101,470,679,0" Name="cbBegin" VerticalAlignment="Top" Width="120" />
+        <TextBlock Text="初状态：" Height="21" HorizontalAlignment="Center" Margin="35,474,824,0" Name="label6" VerticalAlignment="Top" Width="41" />
+        <TextBlock Text="待验证的语句：" Height="21" HorizontalAlignment="Center" Margin="36,510,790,0" Name="label7" VerticalAlignment="Top" Width="74" />
+        <TextBox Height="23" HorizontalAlignment="Center" IsReadOnly="False" Margin="36,529,734,0" Name="sentence" VerticalAlignment="Top" Width="130" />
+        <TextBlock Height="23" HorizontalAlignment="Center" Margin="184,529,679,0" Name="legal" VerticalAlignment="Top" Width="37" Text="就绪" Foreground="Red" FontSize="16" />
+        <TextBlock Text="FIRST 与 FOLLOW 集（单击表格放大）：" Height="21" HorizontalAlignment="Center" Margin="252,87,437,0" Name="label8" VerticalAlignment="Top" Width="211" />
+        <TextBlock Text="构造DFA状态矩阵（单击表格放大）：" Height="21" HorizontalAlignment="Center" Margin="568,87,147,0" Name="label9" VerticalAlignment="Top" Width="185" />
+        <TextBlock Text="验证语句合法性的分析过程（单击表格放大）：" Height="21" HorizontalAlignment="Center" Margin="568,320,103,0" Name="label10" VerticalAlignment="Top" Width="229" />
+        <data:DataGrid AutoGenerateColumns="True" Height="206" HorizontalAlignment="Center" Margin="252,108,348,0" Name="tbFfset" VerticalAlignment="Top" Width="300" MouseLeftButtonUp="tbFfset_MouseLeftButtonUp" />
+        <data:DataGrid AutoGenerateColumns="True" Height="206" HorizontalAlignment="Center" IsReadOnly="True" Margin="568,108,12,0" Name="tbDfa" VerticalAlignment="Top" Width="320" MouseLeftButtonUp="tbDfa_MouseLeftButtonUp" />
+        <data:DataGrid AutoGenerateColumns="True" Height="242" HorizontalAlignment="Center" IsReadOnly="True" Margin="568,347,12,0" Name="tbAnalyze" VerticalAlignment="Top" Width="320" MouseLeftButtonUp="tbAnalyze_MouseLeftButtonUp" />
+        <data:DataGrid AutoGenerateColumns="True" Height="242" HorizontalAlignment="Center" Margin="252,347,348,0" Name="tbLRList" VerticalAlignment="Top" Width="300" MouseLeftButtonUp="tbLRList_MouseLeftButtonUp" />
+        <TextBox Height="23" HorizontalAlignment="Center" Text="ε" IsReadOnly="True" Margin="514,56,362,0" Name="empty" VerticalAlignment="Top" Width="24" />
+        <Button Content="样例一" HorizontalAlignment="Center" Margin="551,57,274,578" Name="sample1" Width="75" Click="sample1_Click" />
+        <Button Content="样例二" HorizontalAlignment="Center" Margin="632,57,193,0" Name="sample2" VerticalAlignment="Top" Width="75" Click="sample2_Click" />
+        <Button Content="样例三" HorizontalAlignment="Center" Margin="713,57,112,0" Name="sample3" VerticalAlignment="Top" Width="75" Click="sample3_Click" />
+        <Button Content="样例四" HorizontalAlignment="Center" Margin="794,57,31,0" Name="sample4" VerticalAlignment="Top" Width="75" Click="sample4_Click" />
+        <TextBlock Height="21" HorizontalAlignment="Center" Margin="252,320,536,0" Name="label11" Text="LR(1) 文法的分析表：" VerticalAlignment="Top" Width="112" />
+    </Grid>
+</UserControl>

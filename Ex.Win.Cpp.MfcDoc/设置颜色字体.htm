@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>设置画笔颜色、字体</title>
+</head>
+
+<body>
+
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p><b>画笔颜色：</b></p>
+    <p>CPen Pen;</p>
+    <p>Pen.CreatePen(WS_SOLID,1,</font><font SIZE="2" COLOR="#ff0000">RGB(x,y,z)</font><font SIZE="2">);</p>
+    <p>CClientDC/CDC/CPaintDC *dc(this);</p>
+    <p>dc-&gt;SelectObject(&amp;Pen);</p>
+    <p>Pen.DeleteObject();</p>
+    <p><font color="#008000">//然后使用 dc 变量来绘图</font></p>
+    <p><b>字体：</b></p>
+    <p>CFont Font;</p>
+    <p>Font.CreateFont(20<font color="#008000">/*字号*/</font>,0<font color="#008000">/*加宽*/</font>,0<font color="#008000">/*倾斜度*/</font>,0,0<font color="#008000">/*粗度*/</font>,0<font color="#008000">/*斜体*/</font>,0<font color="#008000">/*下划线*/</font>,0<font color="#008000">/*删除线*/</font>,ANSI_CHARSET<font color="#008000">/*编码*/</font>,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH,&quot;宋体&quot;);</p>
+    <p>CClientDC/CDC/CPaintDC *dc(this);</p>
+    <p>dc-&gt;SelectObject(&amp;Font);</p>
+    <p>Font.DeleteObject();</p>
+    <p><font color="#008000">//然后使用 dc 变量来输出文字</font></p>
+    <p></p>
+    <p><b>显示位图：</b></p>
+    <p>CPaintDC dc(this);</p>
+    <p>CBitmap *pBmp=new CBitmap();</p>
+    <p>pBmp->LoadBitmap(IDB_BMPNAME);</p>
+    <p><font color="#008000">//   载入位图</font></p>
+    <p>CDC *pDDC=new CDC();</p>
+    <p>pDDC->CreateCompatibleDC(&dc);</p>
+    <p>pDDC->SelectObject(pBmp);</p>
+    <p><font color="#008000">//   场景准备</font></p>
+    <p>BITMAP bm;</p>
+    <p>pBmp->GetObject(sizeof(bm),&bm);</p>
+    <p><font color="#008000">//   获取位图长宽</font></p>
+    <p>dc.StretchBlt(0,0,bm.bmWidth,bm.bmHeight,pDDC,0,0,bm.bmWidth,bm.bmHeight,SRCCOPY);</p>
+    <p><font color="#008000">//   画图</font></p>
+    <p></p>
+    </font>
+  </dir>
+</dir>
+
+</body>
+
+</html>

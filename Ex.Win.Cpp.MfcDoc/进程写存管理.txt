@@ -1,0 +1,16 @@
+HWND hWnd=FindWindowEx(0,0,0,"<窗口名称>");
+if (hWnd)
+{
+	DWORD hProcId; 
+	GetWindowThreadProcessId(hWnd,&hProcId);
+	HANDLE hProc =OpenProcess(PROCESS_ALL_ACCESS|PROCESS_TERMINATE|PROCESS_VM_OPERATION|PROCESS_VM_READ|PROCESS_VM_WRITE,FALSE,hProcId);
+	if (hProc)
+	{
+		DWORD AdrCode=0x0;
+		WriteProcessMemory(hProc,(LPVOID)0x00000010,&AdrCode,1,NULL); 
+									//地址		数值
+		AfxMessageBox("yes");
+		TerminateProcess(hProc,1);	//结束进程
+		CloseHandle(hProc);			//释放空间
+	}
+}

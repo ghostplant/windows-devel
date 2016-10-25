@@ -1,0 +1,33 @@
+[Version] ; 版本信息
+Signature=$CHICAGO$
+Provider=%MFGNAME%
+
+[DestinationDirs] ; 目标路径
+DefaultDestDir=10,system32\drivers
+FiltJectCopyFiles=11
+
+[SourceDisksFiles] ; 源文件
+CuiWei_USBReadonlyFilter.sys=1
+
+[SourceDisksNames] ; 源目录
+1=%INSTDISK%,,,
+
+[DefaultInstall.ntx86]
+CopyFiles=DriverCopyFiles,FiltJectCopyFiles
+
+[DriverCopyFiles] ; 安装文件需要拷贝的列表
+CuiWei_USBReadonlyFilter.sys,,,0x60
+
+[DefaultInstall.ntx86.services] ;服务名与服务信息的映射
+AddService=CuiWei_USBReadonlyFilter,,FilterService
+
+[FilterService]
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%10%\system32\drivers\CuiWei_USBReadonlyFilter.sys
+
+[Strings] ; 字符串常量
+MFGNAME="CuiWei_USBReadonlyFilter From Njust"
+INSTDISK="CuiWei's USB-Disk"
+DESCRIPTION="File Filter Driver, Made by CuiWei - 0911080114"

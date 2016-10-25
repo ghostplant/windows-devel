@@ -1,0 +1,206 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>消息映射机制</title>
+</head>
+
+<body>
+
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p>class C____:public C______</p>
+    <p>{</p>
+    <p>protected:</p>
+    <p></font><font SIZE="2" COLOR="#0000ff">afx_msg void OnShowWindow(); //声明消息</p>
+    <p>afx_msg void OnFileClose();</p>
+    <p>DECLARE_MESSAGE_MAP()</p>
+    </font><font SIZE="2">
+    <p>};</p>
+    </font><font SIZE="2" COLOR="#0000ff">
+    <p>BEGIN_MESSAGE_MAP(CWinMainDlg,CDialog) //括号内前者为消息映射宏所在的类，后者为该类所继承的类</p>
+    <p>ON_COMMAND(ID_FILE_CLOSE,OnFileClose) // 程序命令消息，结构为 ON_XXXX_YYYY，声明 
+    OnXxxxYyyy()</p>
+    <p>ON_WM_SHOWWINDOW() // 标准 Windows 消息， 结构为 ON_WM_XXXXXX，声明 OnXxxxxx()</p>
+    <p>END_MESSAGE_MAP()</p>
+    </font><font SIZE="2">
+    <p>　</p>
+    <p><b>消息映射附录：</b></p>
+    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#FF0000" width="83%" height="419">
+      <tr>
+        <td width="13%" align="center" height="13"><font SIZE="2">消息</font></td>
+        <td width="52%" align="center" height="13"><font SIZE="2">宏映射</font></td>
+        <td width="36%" align="center" height="13"><font SIZE="2">成员函数名</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">按钮命令</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_COMMAND(</font><font SIZE="2" COLOR="#ff00ff">ID_BTN_NAME</font><font SIZE="2">,OnBtnName)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2" COLOR="#800080">
+        afx_msg void </font><font SIZE="2">OnBtnName()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="18"><font SIZE="2">窗体绘图</font></td>
+        <td width="52%" align="left" height="18"><font SIZE="2">&nbsp;ON_WM_PAINT()
+        </font></td>
+        <td width="36%" align="left" height="18"><font SIZE="2">OnPaint()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="14"><font SIZE="2">关闭窗口时</font></td>
+        <td width="52%" align="left" height="14"><font SIZE="2">&nbsp;ON_WM_CLOSE()/ON_WM_DESTORY()</font></td>
+        <td width="36%" align="left" height="14"><font SIZE="2">
+        OnClose()/OnDestroy()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="17"><font SIZE="2">启动窗体前</font></td>
+        <td width="52%" align="left" height="17"><font SIZE="2">&nbsp;ON_WM_INITDIALOG()</font></td>
+        <td width="36%" align="left" height="17"><font SIZE="2">OnInitDialog()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">启动窗体时</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_SHOWWINDOW()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnShowWindow()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">键盘按下时</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_KEYDOWN()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnKeyDown(UINT 
+        nChar, UINT nRepCnt,UINT nFlags)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">键盘释放时</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_KEYUP()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnKeyUp(UINT 
+        nChar,UINT nRepCnt,UINT nFlags)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">鼠标左键点击</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_LBUTTONDOWN()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnLButtonDown(UINT nFlags, CPoint point)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">鼠标左键释放</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_LBUTTONUP()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnLButtonUp(UINT 
+        nFlags, CPoint point)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">鼠标左键双击</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_LBUTTONDBLCLK()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnLButtonDblClk(UINT nFlags, CPoint point)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">鼠标右键点击</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_RBUTTONDOWN()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnRButtonDown(UINT nFlags, CPoint point)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">鼠标移动时</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_MOUSEMOVE()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnMouseMove(UINT 
+        nFlags, CPoint point)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">窗体移动时</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_WM_MOVE()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnMove(int x, 
+        int y)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">设置光标</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_WM_SETCURSOR()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">改变窗体大小</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_WM_SIZE()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnSize(UINT 
+        nType, int cx, int cy)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">设置定时事件</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_WM_TIMER()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnTimer(UINT 
+        nIDEvent)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="14"><font SIZE="2">更新控件</font></td>
+        <td width="52%" align="left" height="14">&nbsp;<font SIZE="2">ON_UPDATE_COMMAND_UI(</font><font SIZE="2" COLOR="#ff00ff">ID_BTN</font><font SIZE="2">,OnUpdateBtn)
+        </font></td>
+        <td width="36%" align="left" height="14"><font SIZE="2">
+        OnUpdateBtnName(CCmdUI* pCmdUI)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">文本内容改变</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_EN_CHANGE(</font><font SIZE="2" COLOR="#ff00ff">IDC_EDIT_ID</font><font SIZE="2">, 
+        OnChangeEditId)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnChangeEditId()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">单选按钮击中</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_BN_CLICKED(</font><font SIZE="2" COLOR="#ff00ff">IDC_RADIO_ID</font><font SIZE="2">, 
+        OnRadioId)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">OnRadioId()</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">Tab改变选项卡</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_NOTIFY(TCN_SELCHANGE,</font><font SIZE="2" COLOR="#ff00ff">IDC_TAB_ID</font><font SIZE="2">,OnSelchangeTabId)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnSelchangeTabId(NMHDR* pNMHDR,LRESULT* pResult)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="12"><font SIZE="2">Tree点击项目</font></td>
+        <td width="52%" align="left" height="12">&nbsp;<font SIZE="2">ON_NOTIFY(NM_CLICK,</font><font SIZE="2" COLOR="#ff00ff">IDC_TREE_ID</font><font SIZE="2">,OnClickTreeId)</font></td>
+        <td width="36%" align="left" height="12"><font SIZE="2">
+        OnClickTreeId(NMHDR* pNMHDR, LRESULT* pResult)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">Tree双击项目</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_NOTIFY(NM_DBLCLK,
+        </font><font SIZE="2" COLOR="#ff00ff">IDC_TREE_ID</font><font SIZE="2">, 
+        OnDblclkTreeId)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnDblclkTreeId(NMHDR* pNMHDR, LRESULT* pResult)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="19"><font SIZE="2">Tree右击项目</font></td>
+        <td width="52%" align="left" height="19">&nbsp;<font SIZE="2">ON_NOTIFY(NM_RCLICK,
+        </font><font SIZE="2" COLOR="#ff00ff">IDC_TREE_ID</font><font SIZE="2">, 
+        OnRclickTreeId)</font></td>
+        <td width="36%" align="left" height="19"><font SIZE="2">
+        OnRclickTreeId(NMHDR* pNMHDR, LRESULT* pResult)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">List点击项目</font></td>
+        <td width="52%" align="left" height="16">&nbsp;<font SIZE="2">ON_NOTIFY(NM_CLICK,</font><font SIZE="2" COLOR="#ff00ff">IDC_LIST_ID</font><font SIZE="2">,OnClickListId)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnClickListId(NMHDR* pNMHDR, LRESULT* pResult)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">List双击项目</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_NOTIFY(NM_DBLCLK,
+        <font SIZE="2" COLOR="#ff00ff">IDC_LIST_ID</font>, OnDblclkListId)</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">
+        OnDblclkListId(NMHDR* pNMHDR, LRESULT* pResult)</font></td>
+      </tr>
+      <tr>
+        <td width="13%" align="center" height="16"><font SIZE="2">视图场景</font></td>
+        <td width="52%" align="left" height="16"><font SIZE="2">&nbsp;ON_CREATE()</font></td>
+        <td width="36%" align="left" height="16"><font SIZE="2">virtual BOOL 
+        OnCreateClient(LPCREATESTRUCT lpcs,CCreateContext* pContext);</font></td>
+      </tr>
+    </table>
+    </font>
+  </dir>
+</dir>
+
+</body>
+
+</html>

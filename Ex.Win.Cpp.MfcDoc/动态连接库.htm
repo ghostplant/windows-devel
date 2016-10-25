@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>动态连接库</title>
+</head>
+
+<body>
+<dir>
+  <dir>
+    <p><b>建立一个 MFC DLL 的工程项目:</b></p>
+    <font SIZE="2">
+    <p><font color="#FF0000"><b>1)项目名.cpp 中：</b></font></p>
+    <p><b>在头文件后面添加：</b></p>
+    <p>#pragma data_seg(&quot;SHAREDINFO&quot;)</p>
+    <p><font color="#008000">// 定义共享变量(如：int i=0)</font></p>
+    <p>#pragma data_seg()</p>
+    <p><b>在将近结尾添加：</b></p>
+    <p>// 定义 WINAPI 函数( 如：void </font><font SIZE="2" COLOR="#ff0000">WINAPI</font><font SIZE="2"> 
+    func(){...} )</p>
+    <p><b><font color="#FF0000">2)项目名.h 中：</font></b></p>
+    <p><b>在将近结尾添加：</b></p>
+    <p>#define DLLEXPORT extern &quot;C&quot; _declspec(dllexport)</p>
+    <p>DLLEXPORT void WINAPI func(); <font color="#008000">//声明刚才定义的函数</font></p>
+    <p><font color="#FF0000"><b>3)项目名.def 中：</b></font></p>
+    <p><b>在 EXPORTS 后添加：</b></p>
+    <p>func1 @1</p>
+    <p>func2 @2 <font color="#008000">//声明各函数入口</font></p>
+    <p><b>继续添加：</b></p>
+    <p>SECTIONS</p>
+    <p>SHAREDINFO SHARED <font color="#008000">//前后 SHAREDINFO 可以改变</font></p>
+    <p><b><font color="#FF0000">4)在需要该DLL的程序CPP文件头:</font></b></p>
+    <p>添加 #include &quot;X:\...\项目名.h&quot;,</p>
+    <p>选择 Visual C++ 菜单的 &quot;工程&quot;-&gt;&quot;工作空间&quot;来添加该项目的DLL,func()就可以使用了。</p>
+    </font>
+  </dir>
+</dir>
+</body>
+
+</html>

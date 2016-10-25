@@ -1,0 +1,11 @@
+Ê¾Àý£º
+
+CFileFind m_find;BOOL bFind;CString FileName[64];int i=0;
+bFind=m_find.FindFile("X:\\..\\*.*");
+while ( bFind )
+{
+	bFind = m_find.FindNextFile();
+	FileName[i]=(m_find.IsDirectory())?"->"+m_find.GetFileName():m_find.GetFileName();
+	i++;
+}
+m_find.Close();

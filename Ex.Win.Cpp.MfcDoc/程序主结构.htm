@@ -1,0 +1,106 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>程序主结构</title>
+</head>
+
+<body>
+
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p><b>①精简式(需要 DLL 支持)</b></p>
+    <p>#include &quot;afxwin.h&quot; </font><font SIZE="2" COLOR="#0000ff">(1)程序结构的头文件</p>
+    </font><font SIZE="2">
+    <p>class CWinMainApp:public CWinApp </font><font SIZE="2" COLOR="#0000ff">
+    (2)继承一个公用申请程序类，并声明启动程序工作的成员函数</p>
+    </font><font SIZE="2">
+    <p>{</p>
+    <p>public:</p>
+    <p>virtual BOOL InitInstance();</p>
+    <p>};</p>
+    <p>CWinMainApp theApp; </font><font SIZE="2" COLOR="#0000ff">(3)声明工程的主申请程序类</p>
+    </font><font SIZE="2">
+    <p>BOOL CWinMainApp::InitInstance() </font><font SIZE="2" COLOR="#0000ff">
+    (4)定义主申请程序类的启动程序工作的成员函数</p>
+    </font><font SIZE="2">
+    <p>{</p>
+    <p></font><font SIZE="2" COLOR="#008000">//程序过程...</p>
+    </font><font SIZE="2">
+    <p>return TRUE;</p>
+    <p>}</p>
+    <p><b>②对话框式(需要 DLL、资源 支持)</b></p>
+    <p>资源:</p>
+    <p>对话框 IDD_MAIN_FRM</p>
+    <p>　</p>
+    <p>#include &quot;afxwin.h&quot;</p>
+    <p>#include &quot;resource.h&quot;</p>
+    <p>class CWinMainApp:public CWinApp</p>
+    <p>{</p>
+    <p>public:</p>
+    <p>virtual BOOL InitInstance();</p>
+    <p>};</p>
+    <p>　</p>
+    <p>CWinMainApp theApp;</p>
+    </font><font SIZE="2" COLOR="#008000">
+    <p>// 开始定义一个窗体消息机制：</p>
+    </font><font SIZE="2">
+    <p>class CWinMainDlg:public CDialog</p>
+    <p>{</p>
+    <p>public:</p>
+    <p>CWinMainDlg();</p>
+    <p>enum{IDD=IDD_MAIN_FRM};</p>
+    <p>DECLARE_MESSAGE_MAP()</p>
+    <p>};</p>
+    <p>CWinMainDlg::CWinMainDlg():CDialog(IDD)</p>
+    <p>{</p>
+    <p>}</p>
+    <p>BEGIN_MESSAGE_MAP(CWinMainDlg, CDialog)</p>
+    <p>END_MESSAGE_MAP()</p>
+    </font><font SIZE="2" COLOR="#008000">
+    <p>// 结束定义一个窗体消息机制。</p>
+    </font><font SIZE="2">
+    <p>BOOL CWinMainApp::InitInstance()</p>
+    <p>{</p>
+    <p>CWinMainDlg MainDlg;</p>
+    <p>m_pMainWnd=&amp;MainDlg;</p>
+    <p>MainDlg.DoModal();</p>
+    <p>return FALSE;</p>
+    <p>}</p>
+    <p>　</p>
+    <p><b>③空白主窗体式(需要 DLL、资源 支持)</b></p>
+    <p>#include &quot;afxwin.h&quot;</p>
+    <p>#include &quot;resource.h&quot;</p>
+    <p>class CWinMainApp : public CWinApp</p>
+    <p>{</p>
+    <p>public:</p>
+    <p>virtual BOOL InitInstance();</p>
+    <p>};</p>
+    <p>CWinMainApp theApp;</p>
+    <p>class CMainFrame : public CFrameWnd</p>
+    <p>{</p>
+    <p>DECLARE_MESSAGE_MAP()</p>
+    <p>};</p>
+    <p>BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)</p>
+    <p>END_MESSAGE_MAP()</p>
+    <p>BOOL CWinMainApp::InitInstance()</p>
+    <p>{</p>
+    <p>CMainFrame * pFrm;</p>
+    <p>pFrm = new CMainFrame();</p>
+    <p>pFrm-&gt;LoadFrame(IDR_MAINFRAME); </font><font SIZE="2" COLOR="#008000">
+    //这里必须有&quot;</font><font SIZE="2" COLOR="#ff0000">菜单</font><font SIZE="2" COLOR="#008000">&quot;,可以有&quot;图标&quot;、&quot;快捷键&quot;。</p>
+    </font><font SIZE="2">
+    <p>pFrm-&gt;ShowWindow(m_nCmdShow);</p>
+    <p>m_pMainWnd = pFrm;</p>
+    <p>return TRUE;</p>
+    <p>}</p>
+  </dir>
+</dir>
+</font>
+
+</body>
+
+</html>

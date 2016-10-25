@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>设置菜单项目属性</title>
+</head>
+
+<body>
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p><b>消息映射到：</b></p>
+    <p>ON_UPDATE_COMMAND_UI(</font><font SIZE="2" COLOR="#ff00ff">ID_BTN</font><font SIZE="2">, 
+    OnUpdateBtn) OnUpdateBtnName(CCmdUI* pCmdUI)</p>
+    <p>{</p>
+    <p>pCmdUI-&gt;SetCheck(BOOL);</p>
+    <p>pCmdUI-&gt;SetRadio(BOOL);</p>
+    <p>pCmdUI-&gt;Enable(BOOL);</p>
+    <p>pCmdUI-&gt;SetText(CString);</p>
+    <p>}</p>
+    <p><b>添加删除菜单项目（这是事件，不是更新消息）：</b></p>
+    <p>CMenu * pmMain = GetMenu();</p>
+    <p>CMenu * pmSub = pmMain-&gt;GetSubMenu(2);</p>
+    <p>pmSub-&gt;AppendMenu(MF_STRING, ID_MENU_NAME, _T(&quot;项目名&quot;));</p>
+    <p>pmSub-&gt;AppendMenu(MF_SEPARATOR);</p>
+    <p>pmSub-&gt;DeleteMenu(MF_STRING,ID_MENU_NAME);</p>
+    <p><b>弹出菜单：</b></p>
+    <p></font><font SIZE="2" COLOR="#008000">//需要得到(CPoint)point的值</p>
+    </font><font SIZE="2">
+    <p>ClientToScreen(&amp;point);</p>
+    <p>CMenu mnuCnt;mnuCnt.LoadMenu(IDR_MNU_NAME);</p>
+    <p>CMenu * pmnu = mnuCnt.GetSubMenu(0);</p>
+    <p>pmnu-&gt;TrackPopupMenu(TPM_RIGHTBUTTON,point.x,point.y,this);</p>
+  </dir>
+</dir>
+</font>
+</body>
+
+</html>

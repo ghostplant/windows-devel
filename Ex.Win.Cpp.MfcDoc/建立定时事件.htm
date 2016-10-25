@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>建立定时事件</title>
+</head>
+
+<body>
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p><b>首先建立消息映射机制：</b></p>
+    <p><font color="#0000FF">ON_WM_TIMER();</font></p>
+    <p><b>然后，利用SetTimer()函数：</b></p>
+    <p><font color="#0000FF">int i,times,nEvt;</font></p>
+    <p><font color="#0000FF">void C___::On____()</font></p>
+    <p><font color="#0000FF">{</font></p>
+    <p><font color="#0000FF">i=1;time=</font><font color="#008000">&lt;Timer运行总次数&gt;</font><font color="#0000FF">;</font></p>
+    <p><font color="#0000FF">nEvt=0; </font><font color="#008000">
+    //设置该Timer事件为:0</font></p>
+    <p><font color="#0000FF">SetTimer(nEvt,</font><font color="#008000">&lt;Timer运行的时间间隔&gt;</font><font color="#0000FF">,0);</font></p>
+    <p><font color="#0000FF">}</font></p>
+    <p>　</p>
+    <p><font color="#0000FF">void C___::OnTimer(UINT nIDEvent)</font></p>
+    <p><font color="#0000FF">{</font></p>
+    <p><font color="#0000FF">if (i&lt;=times)</font></p>
+    <p><font color="#0000FF">{</font></p>
+    <p><font color="#0000FF">i++;</font></p>
+    <p><font color="#008000">//设置事件...</font></p>
+    <p><font color="#0000FF">}</font></p>
+    <p><font color="#0000FF">else</font></p>
+    <p><font color="#0000FF">KillTimer(nEvt);</font></p>
+    <p>}</p>
+  </dir>
+</dir>
+</font>
+</body>
+
+</html>

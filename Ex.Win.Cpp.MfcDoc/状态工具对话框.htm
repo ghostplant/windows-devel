@@ -1,0 +1,82 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>空白窗式 "状态""工具"对话框"</title>
+</head>
+
+<body>
+
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p><b>第一步：在程序代码外部添加：</b></p>
+    </font><font SIZE="2" COLOR="#ff0000">
+    <p>// 工具条设置</p>
+    <p>static UINT buttons[] =</p>
+    <p>{</p>
+    <p>ID_FILE_OPEN,</p>
+    <p>ID_FILE_TYPE,</p>
+    <p>ID_SEPARATOR,</p>
+    <p>ID_VIEW_PROGRESS,</p>
+    <p>ID_SEPARATOR,</p>
+    <p>ID_APP_ABOUT,</p>
+    <p>};</p>
+    <p>// 状态条设置</p>
+    <p>static UINT indicators[] =</p>
+    <p>{</p>
+    <p>ID_SEPARATOR,</p>
+    <p>ID_INDICATOR_CAPS,</p>
+    <p>ID_INDICATOR_NUM,</p>
+    <p>ID_INDICATOR_SCRL,</p>
+    <p>};</p>
+    </font><font SIZE="2">
+    <p><b>第二步： 在宏消息映射表中添加：</b></p>
+    </font><font SIZE="2" COLOR="#ff0000">
+    <p>ON_WM_CREATE()</p>
+    </font><font SIZE="2">
+    <p>在定义该宏的 MainFrame 类中添加：</p>
+    </font><font SIZE="2" COLOR="#ff0000">
+    <p>protected:</p>
+    <p>CStatusBar m_wndStatusBar;</p>
+    <p>CToolBar m_wndToolBar;</p>
+    <p>CDialogBar m_wndDialogBar;</p>
+    <p>afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);</p>
+    </font><font SIZE="2">
+    <p>再定义 OnCreate()函数:</p>
+    </font><font SIZE="2" COLOR="#ff0000">
+    <p>int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)</p>
+    <p>{</p>
+    <p>// 工具条生成</p>
+    <p>m_wndToolBar.Create(this);</p>
+    <p>m_wndToolBar.LoadBitmap(IDR_MAINFRAME); //需要 IDR_MAINFRAME 资源</p>
+    <p>m_wndToolBar.SetButtons(buttons,sizeof(buttons)/sizeof(UINT));</p>
+    <p>// 状态条生成</p>
+    <p>m_wndStatusBar.Create(this);</p>
+    <p>m_wndStatusBar.SetIndicators(indicators,sizeof(indicators)/sizeof(UINT));</p>
+    <p>//对话框条生成</p>
+    <p>
+    m_wndDialogBar.Create(this,IDD_FRAME_CHILD,WS_CHILD|CBRS_TOP|CBRS_TOOLTIPS | 
+    CBRS_FLYBY, 0); //需要 IDD_FRAME_CHILD 资源</p>
+    <p>m_wndDialogBar.ShowWindow(SW_SHOWNORMAL);</p>
+    </font><font SIZE="2" COLOR="#008000">
+    <p>/*</p>
+    <p>要使得工具条或对话框条可以移动，以工具条为例，需要加入下列代码：</p>
+    <p>m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);</p>
+    <p>EnableDocking(CBRS_ALIGN_ANY);</p>
+    <p>DockControlBar(&amp;m_wndToolBar);</p>
+    <p>*/</p>
+    </font><font SIZE="2" COLOR="#ff0000">
+    <p>return 0;</p>
+    <p>}</p>
+  </dir>
+</dir>
+</font>
+
+<p>　</p>
+
+</body>
+
+</html>

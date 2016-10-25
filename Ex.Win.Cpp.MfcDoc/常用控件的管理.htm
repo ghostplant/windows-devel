@@ -1,0 +1,45 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>常用控件及对话框</title>
+</head>
+
+<body>
+
+<dir>
+  <dir>
+    <font SIZE="2">
+    <p><b>常用控件</b></p>
+    <p>以TreeView为例：</p>
+    <p>CTreeCtrl *m_Tree;</p>
+    <p>*m_Tree=(CTreeCtrl *)GetDlgItem(</font><font SIZE="2" COLOR="#ff0000">IDC_TREE_NAME</font><font SIZE="2">);</p>
+    <p>m_Tree-&gt;InsertItem(...);</p>
+    <p><b>其他控件的类：</b></p>
+    <p>CListCtrl; CRichEditView; CImageList; CButton; CHtmlView; CListBox; CEdit; CProgressCtrl; CSliderCtrl; CTabCtrl; CStatic; CAnimateCtrl。</p>
+    <p></p>
+    <p><b>常用控件的风格常数</b></p>
+    <p>Windows: WS_[MAX/MIN]IMIZEBOX|WS_CHILD|WS_PUPOL|WS_DLGFRAME|WS_THICKFRAME|WS_VISIBLE|WS_TABSTOP|WS_BORDER|WS_OVERLAPPEDWINDOW|WS_VSCROLL|WS_HSCROLL|WS_CAPTION</p>
+    <p>Buttons: BS_(DEF)PUSTBUTTON|BS_(AUTO)RADIOBUTTON|BS_(AUTO)CHECKBOX</p>
+    <p>Statics: SS_LEFT(NOWORDWRAP)|SS_WHITEFRAME|SS_WHITERECT|</p>
+    <p>EditBox: ES_MULTILINE|ES_WANTRETURN|ES_AUTOVSCROLL</p>
+    <p>ComboBox: CBS_AUTOHSCROLL|CBS_SORT|CBS_DROP(DOWN)|CBS_SIMPLE</p>
+    <p>ListCtrl: LVS_NOSCROLL|LVS_ICON|LVS_SMALLICON|LVS_LIST|LVS_REPORT</p>
+    <p>TreeCtrl: TVS_HASLINES|TVS_HASBUTTONS|TVS_EDITLABLES|TVS_SHOWSELALWAYS</p>
+    <p></p>
+    <p><b>通用对话框</b></p>
+    <p>CFileDialog Dlg([int:打开(1):保存(0)],"",[str:启动默认路径],OFN_FILEMUSTEXIST|...,[str:文件类型])</p>
+    <p>CFindReplaceDialog Dlg([int:查找(1):替换(0)],"",[str:启动默认字段],FR_DOWN|FR_HIDEWHOLEWORD,this)</p>
+    <p>CColorDialog Dlg</p>
+    <p>CFontDialog Dlg</p>
+    <p></p>
+    <p></p>
+  </dir>
+</dir>
+</font>
+
+</body>
+
+</html>
