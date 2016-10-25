@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="achievement" extends="struts-default">
+        <action name="teachingachievement" class="cn.edu.njust.steduman.action.achievement.TeachingAchievementAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="researchachievement" class="cn.edu.njust.steduman.action.achievement.ResearchAchievementAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="essayachievement" class="cn.edu.njust.steduman.action.achievement.EssayAchievementAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="patentachievement" class="cn.edu.njust.steduman.action.achievement.PatentAchievementAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="cultivationachievement" class="cn.edu.njust.steduman.action.achievement.CultivationAchievementAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="achievementquery" class="cn.edu.njust.steduman.action.achievement.AchievementQueryAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="exportachievement" class="cn.edu.njust.steduman.action.achievement.ExportAchievementAction">
+            <result name="success">/index.jsp</result>
+            <result name="output_a" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="stuEssay.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+            <result name="output_b" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="teachAchieve.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+            <result name="output_c" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="patent.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+            <result name="output_d" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="essay.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+
+    </package>
+</struts>
+

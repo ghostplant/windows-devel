@@ -1,0 +1,577 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %} EMC Service {% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title=_("EMC&reg; - Pay as you go") %}
+{% endblock page_header %}
+
+{% block main %}
+
+<script>
+	function show_message(html) {
+		document.getElementById('messages').innerHTML='<div id="message_ctrl" style="display: block;" class="alert alert-block alert-success fade in"><a class="close" data-dismiss="alert" href="#">×</a><p>'+html+'</p></div>';
+	}
+
+	function on_submit() {
+		var period = document.getElementById('submit_text').value;
+		if (period.length>0) {
+			try {
+				var intValue = parseInt(period);
+				if (intValue<1 || intValue>30)
+					throw new Error();
+				period = intValue;
+			} catch (e) {
+				return show_message('Only blank or value between 1-30 is allowed for period inputbox.');
+			}
+		} else
+			period = 0;
+		period = period*24 + parseFloat(document.getElementById('hour_selecting').value);
+		if (period==0.0)
+			return show_message('Querying for recent 0 Minute is not allowed!');
+		var url = document.location.href, at = url.indexOf('&');
+		if (at>=0)
+			url=url.substring(0,at);
+		if (period!='')
+			url+='&period='+period;
+		document.location.href=url;
+	}
+	
+	function on_ready() {
+		var div = document.getElementById('page_main');
+		if (div == null)
+			return setTimeout("on_ready()", 100);
+		var budget = parseFloat('{{ budget }}');
+
+		if (document.getElementById('inst_cfg')!=null) {
+			var cfg = parseFloat(document.getElementById('inst_cfg').innerHTML);
+			var acc = parseFloat(document.getElementById('inst_acc').innerHTML);
+			var tot = (cfg + acc)*1e-2;
+			if (tot==0.0) tot=1e-8;
+			document.getElementById('instance_perc_cfg').style.width = cfg/tot + '%';
+			document.getElementById('instance_perc_acc').style.width = acc/tot + '%';
+		} else {
+			var instances = parseFloat(document.getElementById('value_instances').innerHTML);
+			var images = parseFloat(document.getElementById('value_images').innerHTML);
+			var volumes = parseFloat(document.getElementById('value_volumes').innerHTML);
+			var total = (instances+images+volumes);
+			var pins = (instances*1e2+1e-8)/(budget+1e-8);
+			var pimg = (images*1e2+1e-8)/(budget+1e-8);
+			var pvol = (volumes*1e2+1e-8)/(budget+1e-8);
+			var ptot = (total*1e2+1e-8)/(budget+1e-8);
+			document.getElementById('total_perc_instance').style.width = pins + '%';
+			document.getElementById('total_perc_image').style.width = pimg + '%';
+			document.getElementById('total_perc_volume').style.width = pvol + '%';
+			var prog = document.getElementById('cost_progress');
+			if (ptot>=80) {
+				prog.style.color='#FF0000';
+				prog.innerHTML = '( Warning!! ' + ptot.toFixed(1) + ' % of $ {{ budget }} )';
+			} else if (ptot>=40) {
+				prog.style.color='#FF7700';
+				prog.innerHTML = '( ' + ptot.toFixed(1) + ' % of $ {{ budget }} )';
+			} else {
+				prog.style.color='#0894F6';
+				prog.innerHTML = '( ' + ptot.toFixed(1) + ' % of $ {{ budget }} )';
+			}
+		}
+	}
+	
+	on_ready();
+</script>
+
+<style TYPE="text/css" MEDIA=screen>
+<!--
+
+.right {
+    float: left;
+    width: 390px;
+}
+
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1010;
+  display: none;
+  padding: 1px;
+  text-align: left;
+  white-space: normal;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.popover.right {
+  margin-left: 10px;
+}
+
+.popover .arrow,
+.popover .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.popover .arrow {
+  border-width: 11px;
+}
+
+.popover .arrow:after {
+  border-width: 10px;
+  content: "";
+}
+
+.popover.right .arrow {
+  top: 50%;
+  left: -11px;
+  margin-top: -11px;
+  border-right-color: #999;
+  border-right-color: rgba(0, 0, 0, 0.25);
+  border-left-width: 0;
+}
+
+.popover.right .arrow:after {
+  bottom: -10px;
+  left: 1px;
+  border-right-color: #ffffff;
+  border-left-width: 0;
+}
+
+.popover-title {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  -webkit-border-radius: 5px 5px 0 0;
+     -moz-border-radius: 5px 5px 0 0;
+          border-radius: 5px 5px 0 0;
+}
+
+.popover-title:empty {
+  display: none;
+}
+
+.popover-content {
+  padding: 9px 14px;
+}
+
+.emc-title {
+	border-collapse: separate;
+	border-spacing: 0px 0px;
+	color: #333;
+	floatleftfont-family: anivers;
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 27px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	font-family: anivers;
+}
+
+.active-prog {
+	animation-delay: 0s;
+	animation-direction: normal;
+	animation-duration: 2s;
+	animation-fill-mode: none;
+	animation-iteration-count: infinite;
+	animation-name: progress-bar-stripes;
+	animation-timing-function: cubic-bezier(0, 0, 1, 1);
+	background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	background-size: 40px 40px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px -1px 0px 0px inset;
+	color: #FFF;
+	floatleftfont-family: "Helvetica Neue",Helvetica,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	transition-delay: 0s;
+	transition-duration: 0.6s;
+	transition-propertywidthtransition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+	-moz-box-sizing: border-box;
+	-webkit-animation: progress-bar-stripes 2s linear infinite;
+		-o-animation: progress-bar-stripes 2s linear infinite;
+		animation: progress-bar-stripes 2s linear infinite;
+}
+
+-->
+</style>
+
+<div id="page_main">
+	<div id="messages" class="messages">
+	</div>
+	<br/>
+
+	{% if config == None %}
+		<div class="table_actions clearfix">
+			<table>
+				<tr><td>
+					<div style="width: 400px"><div style="height: 24px; margin-bottom: 20px; overflow: hidden; background-color: #e5e5e5; border-radius: 4px; -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);">
+					  <div id="total_perc_instance" class="active-prog" style="width: 0%; float: left; height: 100%; font-size: 12px; line-height: 20px; color: rgb(255, 255, 255); text-align: center; background-color: rgb(91, 183, 91); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15) inset; transition: width 0.6s ease 0s;"></div>
+					  <div id="total_perc_image" class="active-prog" style="width: 0%; float: left; height: 100%; font-size: 12px; line-height: 20px; color: rgb(255, 255, 255); text-align: center; background-color: rgb(248, 148, 6); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15) inset; transition: width 0.6s ease 0s;"></div>
+					  <div id="total_perc_volume" class="active-prog" style="width: 0%; float: left; height: 100%; font-size: 12px; line-height: 20px; color: rgb(255, 255, 255); text-align: center; background-color: rgb(8, 148, 246); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15) inset; transition: width 0.6s ease 0s;"></div>
+					</div></div>
+				</td></tr>
+			</table>
+		</div>
+		<h3 class="emc-title" style="display: inline;">* Your Budget Used - $ {{ summary_all }} &nbsp;&nbsp; </h3><h3 id="cost_progress" class="emc-title" style="display: inline;"></h3>
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+				<th data-column="0" class="table_header" colspan="5">
+				</th>
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner"></div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Instances</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Images</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Volumes</div></th>
+				  <th class="sortable normal_column tablesorter-header" width="300px"><div class="tablesorter-header-inner">Total Cost as You Have Gone</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="sortable normal_column">Cost ($)</td>
+				<td class="sortable normal_column"><h3 id="value_instances" style="color:#5BB75B">{{ summary_instances }}</h3></td>
+				<td class="sortable normal_column"><h3 id="value_images" style="color:#F89406">{{ summary_images }}</h3></td>
+				<td class="sortable normal_column"><h3 id="value_volumes" style="color:#0894F6">{{ summary_volumes }}</h3></td>
+				<td class="sortable normal_column"><h3>{{ summary_all }}</h3></td>
+			</tr>
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td colspan="5">
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+		<hr/>
+		<br/>
+		
+		<h3 class="emc-title">* Detail - History Instances</h3><br/>
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Instance Name</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Memory (MB)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">VCPUs</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">DiskRoot (GB)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">DiskExtra (GB)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Created At</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Deleted At</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Cost</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for id,this_uuid,created_at,deleted_at,memory_mb,vcpus,hostname,root_gb,ephemeral_gb, summary in instances %}
+			  <tr><td class="sortable normal_column">{% if uuid != this_uuid %} <a href="/project/emc_pay2/?uuid={{ this_uuid }}">{{ hostname }}</a>{% else %}{{ hostname }}{% endif %}</td><td class="sortable normal_column">{{ memory_mb }}</td><td class="sortable normal_column">{{ vcpus }}</td>
+			  	<td class="sortable normal_column">{{ root_gb }}</td><td class="sortable normal_column">{{ ephemeral_gb }}</td><td class="sortable normal_column">{{ created_at }}</td><td class="sortable normal_column">{{ deleted_at }}</td>
+			  	<td class="sortable normal_column">{{ summary }}</td>
+			  </tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td data-column="0" colspan="7">
+				  <h4><strong>Summary on all instances ($)</strong></h4>
+				</td>
+				<td data-column="4">
+				  <h3 style="color:#5BB75B">{{ summary_instances }}</h3>
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+		<hr/>
+		
+		<h3 class="emc-title">* Detail - History Images</h3><br/>
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Image Name</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Disk Format</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Container Format</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Size (GB)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Created At</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Deleted At</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Duration (day)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Price ($/GB/day)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Cost</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for image_id, name, created_at, deleted_at, disk_format, container_format, size, cost, price, duration in images %}
+			  <tr><td class="sortable normal_column"><span title="{{ image_id }}">{{ name }}</span></td><td class="sortable normal_column">{{ disk_format }}</td>
+			    <td class="sortable normal_column">{{ container_format }}</td><td class="sortable normal_column">{{ size }}</td>
+			    <td class="sortable normal_column">{{ created_at }}</td><td class="sortable normal_column">{{ deleted_at }}</td>
+			  	<td class="sortable normal_column">{{ duration }}</td><td class="sortable normal_column">{{ price }}</td><td class="sortable normal_column">{{ cost }}</td>
+			  </tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td data-column="0" colspan="8">
+				  <h4><strong>Summary on all images ($)</strong></h4>
+				</td>
+				<td data-column="4">
+				  <h3 style="color:#F89406">{{ summary_images }}</h3>
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+		<hr/>
+		
+		<h3 class="emc-title">* Detail - History Volumes</h3><br/>
+		{% for timeline,volume_id, name, cost, price in volumes %}
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{volume_id}}">
+					Volume Timeline - {{ name }}
+				</a>
+			</div>
+			<div id="{{volume_id}}" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					<h3 style="font-family: anivers;">Price : $ {{ price }} / (GB * day)</h3>
+					<h3 style="font-family: anivers;">Partial Summary ($) : {{ cost }}</h3>
+					{% for event, size, currTime, prevTime, duration, pay in timeline %}
+					<div style="background-color: #f9f9f9;position: relative; display: block;float: left;margin: 20px;" class="popover right">
+						<div class="arrow"></div>
+						<h3 class="popover-title"> Event: {{ event }} volume at {{ currTime }}</h3>
+						<div class="popover-content">
+						  {% if event != "creating" %}
+						    <p>From : {{ prevTime }}</p><p>Duration : {{ duration }}</p>
+						  {% endif %}
+						  <p>Cost ($) : {{ pay }}</p>
+						</div>
+					  </div>
+					{% endfor %}
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		<br/><h3 style="font-family: anivers; display:inline">Summary on all volumes ($): </h3><h3 style="color:#0894F6; display:inline">{{ summary_volumes }}</h3><br/>
+		<hr/>
+
+		<br/>
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+				<th data-column="0" class="table_header" colspan="2">
+				  <h3 class="table_title">* Current Account</h3>
+				</th>
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Type</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Information</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr><td class="sortable normal_column">User ID</td><td class="sortable normal_column">{{ userId }}</td></tr>
+			  <tr><td class="sortable normal_column">User Name</td><td class="sortable normal_column">{{ userName }}</td></tr>
+			  <tr><td class="sortable normal_column">User Token</td><td class="sortable normal_column">{{ userToken }}</td></tr>
+			  <tr><td class="sortable normal_column">Tenant ID</td><td class="sortable normal_column">{{ tenantId }}</td></tr>
+			  <tr><td class="sortable normal_column">Tenant Name</td><td class="sortable normal_column">{{ tenantName }}</td></tr>
+			  <tr><td class="sortable normal_column">Identity URL</td><td class="sortable normal_column">{{ keystoneUrl }}</td></tr>
+			  <tr><td class="sortable normal_column">Metering URL</td><td class="sortable normal_column">{{ meteringUrl }}</td></tr>
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td data-column="0" colspan="2">
+				  <span class="table_count"></span>
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+	{% else %}
+		<div class="table_actions clearfix">
+			<input type="text" style="display:inline; width:120px" id="submit_text" placeholder="Input day elapsed .."></input> + 
+			<select id="hour_selecting" style="display:inline; width:85px">
+				<option value="0" selected="selected">0 Minute</option>
+				<option value="0.5">30 Minute</option>
+				<option value="1">1 Hour</option>
+				<option value="2">2 Hour</option>
+				<option value="3">3 Hour</option>
+				<option value="4">4 Hour</option>
+				<option value="6">6 Hour</option>
+				<option value="9">9 Hour</option>
+				<option value="10">10 Hour</option>
+				<option value="12">12 Hour</option>
+				<option value="15">15 Hour</option>
+				<option value="18">18 Hour</option>
+				<option value="20">20 Hour</option>
+				<option value="23">23 Hour</option>
+			</select>
+			<button style="display:inline" class="btn btn-primary" type="submit" onclick="on_submit();return false">Query This Period</button>
+		</div>
+
+		{% for hostname, created_at, deleted_at, id, root_gb, ephemeral_gb, memory_mb, vcpus in config %}
+		<h3 class="emc-title">* Total Cost on instance '{{ hostname }}' : $ {{ instance_all_total }}</h3>
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner"></div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Cost on Accumulative Resources</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Cost on Machine Configuration</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Total</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="sortable normal_column" width="240px">Summary in previous {{ limit }} ($)</td>
+				<td class="sortable normal_column"><h3 style="color:#5BB75B" id="inst_acc">{{ instance_acc_total }}</h3></td>
+				<td class="sortable normal_column"><h3 style="color:#F89406" id="inst_cfg">{{ instance_cfg_total }}</h3></td>
+				<td class="sortable normal_column"><h3>{{ instance_all_total }}</h3></td>
+			</tr>
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td colspan="4">
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+        
+		<h3 style="font-family: anivers;">Instance Cost Percentage:</h3>
+		<div style="height: 20px; margin-bottom: 20px; overflow: hidden; background-color: #f5f5f5; border-radius: 4px; -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);">
+		  <div id="instance_perc_acc" style="width: 0%; float: left; height: 100%; font-size: 12px; line-height: 20px; color: #fff; text-align: center; background-color: #5BB75B; -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15); box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15); -webkit-transition: width .6s ease; transition: width .6s ease;"></div>
+		  <div id="instance_perc_cfg" style="width: 0%; float: left; height: 100%; font-size: 12px; line-height: 20px; color: #fff; text-align: center; background-color: #F89406; -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15); box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15); -webkit-transition: width .6s ease; transition: width .6s ease;"></div>
+		</div>
+		<hr/>
+		<br/>
+		
+		<h3 class="emc-title">* Detail - Cost on Accumulative Resources</h3>
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+				<th class="table_header">
+				</th>
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Type</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Unit</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Price ($/unit)</div></th>
+				  <!--<th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Total Used (unit)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Total Cost ($)</div></th> -->
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Period Used (unit)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Percentage to Whole Used (%)</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Period Cost</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for title, unit, desc, price, period_used, period_cost,perc in instance_acc_pay %}
+			<tr><td class="sortable normal_column"><span title="{{ desc }}" style="color:#428BCA">{{ title }}</span></td>
+				<td class="sortable normal_column">{{ unit }}</td><td class="sortable normal_column">{{ price }}</td>
+				<!--<td class="sortable normal_column">{{ used }}</td><td class="sortable normal_column">{{ cost }}</td> -->
+				<td class="sortable normal_column">{{ period_used }}</td><td class="sortable normal_column">{{ perc }}</td>
+				<td class="sortable normal_column">{{ period_cost }}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td colspan="5">
+				  <h4><strong>Summary in previous {{ limit }} ($)</strong></h4>
+				</td>
+				<td>
+				  <h3 style="color:#5BB75B">{{ instance_acc_total }}</h3>
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+		<hr/>
+		<br/>
+		
+		<h3 class="emc-title">* Detail - Cost on Machine Configuration</h3>
+		
+		<table class="table table-bordered table-striped datatable tablesorter tablesorter-default">
+			<thead>
+			  <tr class="table_caption">
+				<th data-column="0" class="table_header" colspan="5">
+				</th>
+			  </tr>
+			  <tr class="tablesorter-headerRow">
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner"></div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">VM Memory</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Virtual CPUs</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Disk Root</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Disk Extra</div></th>
+				  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner">Period Cost</div></th>
+			  </tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="sortable normal_column" width="260px"><h4><strong>Summary in previous {{ limit }} ($)</strong></h4></td>
+				{% for key, title, detail, total_cost, unit, ceof in instance_cfg_pay %}
+					<td class="sortable normal_column">{{ total_cost }}</td>
+				{% endfor %}
+				<td class="sortable normal_column"><h3 style="color:#F89406">{{ instance_cfg_total }}</h3></td>
+			</tr>
+			</tbody>
+			<tfoot>
+			  <tr>
+				<td colspan="6">
+				</td>
+			  </tr>
+			</tfoot>
+		</table>
+		{% for key, title, detail, total_cost, unit, ceof in instance_cfg_pay %}
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#cfg-{{key}}">
+				Timeline - {{ title }}
+				</a>
+			</div>
+			<div id="cfg-{{key}}" class="accordion-body collapse">
+				<div class="accordion-inner">
+					{% for volume, from, end, duration, cost in detail %}
+					<div style="background-color: #f9f9f9;position: relative; display: block;float: left;margin: 20px;" class="popover right">
+						<div class="arrow"></div>
+						<h3 class="popover-title">@ {{ end }}</h3>
+						<div class="popover-content">
+						  <p>Config Volume: {{ volume }} {{ unit }}</p>
+						  <p>From: {{ from }}</p>
+						  <p>Duration: {{ duration }} day</p>
+						  <p>Partial Cost: $ {{ cost }}</p>
+						</div>
+					  </div>
+					{% endfor %}
+					<div class="clearfix"></div>
+					<h3 style="font-family: anivers;">Price: $ {{ ceof }} / ( {{ unit }} x day )</h3>
+					<h3 style="font-family: anivers;">Cost: $ {{ total_cost }}</h3>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		
+		{% endfor %}
+		<hr/>
+		<div align="right"><button class="btn btn-small" onclick="location.href='/project/emc_pay2/'"><i class="icon-home"></i> Go Back</button></div>
+		<br/>
+	{% endif %}
+	
+</div>
+
+{% endblock %}

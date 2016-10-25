@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="academic" extends="struts-default">
+        <action name="insertacademicmeeting" class="cn.edu.njust.steduman.action.academic.InsertAcademicMeetingAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="meeting.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+        <action name="appacademicactivity" class="cn.edu.njust.steduman.action.academic.AppAcademicActivityAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="report.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+        <action name="internationcooperation" class="cn.edu.njust.steduman.action.academic.InternationCooperationAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="cooperation.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+        <action name="workingcondition" class="cn.edu.njust.steduman.action.academic.WorkingConditionAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="workingcondition.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+        <action name="libraryorder" class="cn.edu.njust.steduman.action.academic.LibraryOrderAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="library.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+    </package>
+</struts>
+

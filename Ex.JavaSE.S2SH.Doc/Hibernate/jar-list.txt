@@ -1,0 +1,12 @@
+antlr-2.7.6.jar
+asm.jar
+cglib-2.1.3.jar
+commons-collections-2.1.1.jar
+commons-logging-1.1.jar
+dom4j-1.6.1.jar
+hibernate3.jar
+hibernate-annotations.jar
+hibernate-commons-annotations.jar
+hibernate-entitymanager.jar
+hibernate-tools.jar
+jta.jar

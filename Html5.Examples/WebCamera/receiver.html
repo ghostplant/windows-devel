@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<img id="display" width="500" height="400"></img>
+	<br />
+	<audio id="audioElement" controls autoplay="true"></audio>
+	<script>
+		var ws = new WebSocket(
+				"ws://" + window.location.host + "/HTML5Test/websocket");
+
+		ws.onmessage = function(message) {
+			if (message.data.size) {
+				document.querySelector("#audioElement").src = window.URL
+						.createObjectURL(message.data);
+			} else
+				document.querySelector("#display").src = message.data;
+		};
+
+		ws.onopen = function() {
+			ws.send(':receiver');
+		};
+	</script>
+</body>
+</html>

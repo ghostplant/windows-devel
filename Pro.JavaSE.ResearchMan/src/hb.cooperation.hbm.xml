@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Cooperation" table="cooperation">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="name" name="name" type="string"/>
+    <property column="target" name="target" type="string"/>
+    <property column="startYear" name="startYear" type="int"/>
+    <property column="endYear" name="endYear" type="int"/>
+  </class>
+</hibernate-mapping>

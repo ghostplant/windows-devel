@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Depends: zenity, nginx, libav-tools, crtmpserver, alsa-base, alsa-utils, pulseaudio
+
+SERVER=`zenity --entry --title="服务器地址" --text="请填写已安装OurChat的服务器地址：" --entry-text="localhost"`
+
+if [ "$?" == "0" ] ; then
+	NAME=`zenity --entry --title="设置一个名字" --text="请设置一个名字作为对方链接的入口：" --entry-text="$(hostname)"`
+	if [ "$?" == "0" ] ; then
+		TARGET="-f x11grab -i :0.0"
+		if [ -e /dev/video0 ]; then
+			TARGET="-f video4linux2 -i /dev/video0"
+		else
+			zenity --info --title="提示" --text='未找到摄像头，将用桌面截图取代'
+		fi
+		avconv -f alsa -i pulse $TARGET -f flv -ar 22050 -metadata streamName="$NAME" tcp://$SERVER:6666 &
+		x-www-browser "$SERVER/ourchat.htm" &
+		zenity --info --title="运行中" --text='点击"确定"退出OurChat'
+		pkill avconv
+		exit 0
+	fi
+fi
+
+sleep 5

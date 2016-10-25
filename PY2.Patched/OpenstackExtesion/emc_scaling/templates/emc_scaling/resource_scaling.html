@@ -1,0 +1,596 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %} EMC Service {% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title=_("EMC&reg; - Resource Scaling") %}
+{% endblock page_header %}
+
+{% block main %}
+
+<script type="text/javascript" src="/static/smoothie.js"></script>
+
+<script type="text/javascript">
+	function show_messages(data) {
+		document.getElementById('messages').innerHTML='<div id="message_ctrl" style="display: block;" class="alert alert-block alert-success fade in"><a class="close" data-dismiss="alert" href="#">x</a><p>'+data+'</p></div>';
+	}
+  
+	function request(session, response) {
+		var http=new XMLHttpRequest();
+		http.onreadystatechange = function() {
+			if (http.readyState == 4)
+				response(http.responseText);
+		};
+		var url='.?session='+session;
+		http.open('get', url, true);
+		http.send(null);
+	}
+
+	var netline, netprev=0;
+	var displayList = [];
+	
+	function on_ready() {
+
+		var div = document.getElementById('page_main');
+		if (div == null)
+			return setTimeout("on_ready()", 100);
+
+		request('running', function (reply) {
+			if (reply=='yes') {
+				TimeSeries.defaultOptions.resetBounds = false;
+				document.getElementById('when_running').style.display='block';
+				document.getElementById('when_not_run').style.display='none';
+
+				var smoothie = new SmoothieChart({
+					grid: { strokeStyle:'rgb(0, 0, 125)', fillStyle:'rgb(00, 0, 0)',
+					lineWidth: 1, millisPerLine: 500, verticalSections: 6, },
+					labels: { fillStyle:'rgb(255, 255, 255)' }
+				});
+				smoothie.streamTo(document.getElementById("prefCanvas"), 1200);
+				netline = new TimeSeries();
+				netline.append(new Date().getTime(), 500.0);
+				netline.append(new Date().getTime(), 0.0);
+				smoothie.addTimeSeries(netline, { strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.4)', lineWidth:3 });
+
+				document.getElementById('poweroff').onclick = function() {
+					document.getElementById('progress_bar').style.display = 'block';
+					//document.getElementById('poweroff').style.display = 'none';
+					do_poweroff();
+					return false;
+				};
+
+				do_query();
+				do_usage();
+				do_notification();
+
+				document.getElementById('benchmark').onclick = function() {
+					request('benchmark', function(response) {
+						show_messages('Start Benchbark: '+response);
+					});
+				};
+
+				document.getElementById('update').onclick = function() {
+					var first, second;
+					if (document.getElementById('radio_line').checked)
+						first='2';
+					else if (document.getElementById('radio_logic').checked)
+						first='3';
+					else if (document.getElementById('radio_wline').checked)
+						first='4';
+					else
+						first='1';
+					if (document.getElementById('radio_cnt').checked)
+						second='1';
+					else
+						second='2';
+					var cmd = 'update:'+first+second;
+					request(cmd, function(response) {
+						show_messages('Update Method: '+response);
+					});
+				};
+
+				do_status();
+			} else {
+				document.getElementById('when_not_run').style.display='block';
+				document.getElementById('when_running').style.display='none';
+
+				document.getElementById('boot').onclick = function() {
+					document.getElementById('progress_bar').style.display = 'block';
+					document.getElementById('boot').onclick = function() { };
+					do_check();
+					return false;
+				};
+			}
+		});
+
+	}
+	
+	on_ready();
+
+	function register(agent) {
+		var suffix = agent.replace(/\./g, '-'), xid = 'agent-x-' + suffix, stid = 'stat-' + suffix;
+		if (document.getElementById(xid)!=null) {
+			var got = null;
+			for (var i=0;i<displayList.length;i++)
+				if (displayList[i].stid==stid) {
+					got=displayList[i];
+					break;
+				}
+			//document.getElementById('agent-x-' + suffix).style.display='';
+			//document.getElementById('agent-y-' + suffix).style.display='';
+			//document.getElementById('agent-z-' + suffix).style.display='';
+
+			document.getElementById(got.stid).innerHTML = document.getElementById('status_template').innerHTML;
+			got.fcpu.start();
+			got.fmem.start();
+			got.fnet.start();
+			return;
+		}
+
+		var cpu = 'cpu-' + suffix, net = 'net-' + suffix, mem = 'mem-' + suffix;
+		var agentX = document.createElement('tr'), agentY = document.createElement('tr'), agentZ = document.createElement('tr');
+		agentX.id = 'agent-x-' + suffix;
+		agentX.innerHTML='<td rowspan=3 width="160"><div align="center"><strong>'+agent+'</strong></div></td><td rowspan=3 width="100"><div id="'+stid+'" align="center"></div></td><td width="100"><div align="center">CPU Usage</div></td><td><div align="center"><canvas  id="'+cpu+'" width=600 height=60></canvas></div></td>';
+		agentY.id = 'agent-y-' + suffix;
+		agentY.innerHTML='<td><div align="center">Free Usage</div></td><td><div align="center"><canvas id="'+mem+'" width=600 height=60></canvas></div></td>';
+		agentZ.id = 'agent-z-' + suffix;
+		agentZ.innerHTML='<td><div align="center">Network Usage</div></td><td><div align="center"><canvas id="'+net+'" width=600 height=60></canvas></div></td>';
+
+		document.getElementById('worker_template').appendChild(agentX);
+		document.getElementById('worker_template').appendChild(agentY);
+		document.getElementById('worker_template').appendChild(agentZ);
+
+		var netCanvas = document.getElementById(net);
+		var cpuCanvas = document.getElementById(cpu);
+		var memCanvas = document.getElementById(mem);
+
+		var forCPU = new SmoothieChart();
+		forCPU.streamTo(cpuCanvas, 2500);
+		var forMEM = new SmoothieChart();
+		forMEM.streamTo(memCanvas, 2500);
+		var forNET = new SmoothieChart();
+		forNET.streamTo(netCanvas, 2500);
+
+		var lineCPU = new TimeSeries(), predCPU = new TimeSeries();
+		lineCPU.append(new Date().getTime(), 100.0);
+		lineCPU.append(new Date().getTime(), 0.0);
+		forCPU.addTimeSeries(lineCPU, { lineWidth:2, strokeStyle:'rgba(255, 0, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.4)' });
+		forCPU.addTimeSeries(predCPU, { lineWidth:3 });
+
+		var lineMEM = new TimeSeries(), predMEM = new TimeSeries();
+		lineMEM.append(new Date().getTime(), 100.0);
+		lineMEM.append(new Date().getTime(), 0.0);
+		forMEM.addTimeSeries(lineMEM, { lineWidth:2, strokeStyle:'rgba(255, 0, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.4)' });
+		forMEM.addTimeSeries(predMEM, { lineWidth:3 });
+
+		var lineNET = new TimeSeries(), predNET = new TimeSeries();
+		lineNET.append(new Date().getTime(), 100.0);
+		lineNET.append(new Date().getTime(), 0.0);
+		forNET.addTimeSeries(lineNET, { lineWidth:2, strokeStyle:'rgba(255, 0, 0, 0)', fillStyle:'rgba(255, 0, 0, 0.4)' });
+		forNET.addTimeSeries(predNET, { lineWidth:3 });
+
+		displayList.push({
+			stid: stid,
+			fcpu: forCPU,
+			fmem: forMEM,
+			fnet: forNET,
+			lcpu: lineCPU,
+			lmem: lineMEM,
+			lnet: lineNET,
+			gcpu: predCPU,
+			gmem: predMEM,
+			gnet: predNET,
+			ip: agent
+		});
+	}
+
+	function do_status() {
+		request('status', function(response) {
+			if (response[0]=='1')
+				document.getElementById('radio_pred').checked=true;
+			else if (response[0]=='2')
+				document.getElementById('radio_line').checked=true;
+			else if (response[0]=='3')
+				document.getElementById('radio_logic').checked=true;
+			else
+				document.getElementById('radio_wline').checked=true;
+			if (response[1]=='1')
+				document.getElementById('radio_cnt').checked=true;
+			else if (response[1]=='2')
+				document.getElementById('radio_cfg').checked=true;
+		});
+	}
+
+	function do_query() {
+		request('query', function(response) {
+			if (response!='waiting') {
+				if (response[0]=='!') {
+					response = response.substring(1);
+					var words=response.split(';');
+					document.getElementById('nworker').innerHTML = words.length-1;
+					var fields = displayList;
+					for (var i=0;i<fields.length;i++) {
+						document.getElementById(fields[i].stid).innerHTML='Inactive';
+						fields[i].fcpu.stop();
+						fields[i].fmem.stop();
+						fields[i].fnet.stop();
+						/*var suffix=fields[i].ip.replace(/\./g, '-');
+						document.getElementById('agent-x-' + suffix).style.display='none';
+						document.getElementById('agent-y-' + suffix).style.display='none';
+						document.getElementById('agent-z-' + suffix).style.display='none';*/
+					}
+
+					for (var i=1;i<words.length;i++)
+						register(words[i]);
+
+					var put = parseInt(words[0]);
+					if (netprev>0) {
+						var volume = ((put-netprev)*0.001).toFixed(2);
+						document.getElementById('throughput').innerHTML = volume;
+						netline.append(new Date().getTime(), Math.min(volume, 1000.0));
+					}
+					netprev = put;
+				} else
+					return window.location.href='/horizon';
+			}
+			setTimeout("do_query()", 1000);
+		});
+	}
+
+	/*var prevBoxes = [];
+
+	function get_box_entry(key) {
+		for (var i=0;i<prevBoxes.length;i++)
+			if (prevBoxes[i].key==key)
+				return prevBoxes[i];
+		return null;
+	}
+
+	function set_box_entry(key, value) {
+		for (var i=0;i<prevBoxes.length;i++)
+			if (prevBoxes[i].key==key) {
+				prevBoxes[i].value=value;
+				return;
+			}
+		
+		prevBoxes.push({key: key, value: value});
+	}*/
+
+	function do_usage() {
+		request('usage', function(response) {
+			//document.getElementById('message').innerHTML=response;
+			try {
+				var obj = eval('('+response+')');
+				for (var i=0;i<displayList.length;i++) {
+					try {
+						var usage = obj[displayList[i].ip];
+						var imem = parseFloat(usage.mem);
+						var icpu = parseFloat(usage.cpu);
+						var inet = parseFloat(usage.net);
+						var gmem = parseFloat(usage.gmem);
+						var gcpu = parseFloat(usage.gcpu);
+						var gnet = parseFloat(usage.gnet);
+						var cur = new Date().getTime();
+						displayList[i].lmem.append(cur, imem);
+						displayList[i].lcpu.append(cur, icpu);
+						displayList[i].lnet.append(cur, inet);
+						displayList[i].gmem.append(cur, gmem);
+						displayList[i].gcpu.append(cur, gcpu);
+						displayList[i].gnet.append(cur, gnet);
+					} catch (e1) { }
+				}
+			} catch (e2) { }
+			setTimeout("do_usage()", 2000);
+		});
+	}
+
+	function do_notification() {
+		request('notify', function(response) {
+			try {
+				var data = '';
+				var obj = eval('('+response+')');
+				for (var i=0;i<obj.length;i++) {
+					var item = document.createElement('div');
+					item.innerHTML=obj[i];
+					data=data+'<p>'+obj[i]+'</p>';
+					document.getElementById('notify_list').appendChild(item);
+				}
+				if (data!='')
+					show_messages(data);
+			} catch (e2) { }
+			setTimeout("do_notification()", 2000);
+		});
+	}
+
+	function do_check() {
+		document.getElementById('message').innerHTML = 'Cheking for validation ..';
+		document.getElementById('total_percentage').style.width = '10%';
+
+		request('check', function(response) {
+			if (response=='error:not-one-image') {
+				alert('You are supposed to upload exactly one image with scaling ability named "trusty32"!');
+				return window.location.href='/horizon/project/images';
+			} else if (response=='successful')
+				do_clean();
+		});
+	}
+
+	function do_clean() {
+		document.getElementById('message').innerHTML = 'Cleaning old configurations ..';
+		document.getElementById('total_percentage').style.width = '20%';
+
+		request('clean', function(response) {
+			if (response=='successful')
+				do_build();
+		});
+	}
+
+	function do_build() {
+		document.getElementById('message').innerHTML = 'Building new configurations..';
+		document.getElementById('total_percentage').style.width = '40%';
+
+		request('build', function(response) {
+			if (response=='successful')
+				do_boot();
+			else
+				alert(response);
+		});
+	}
+
+	function do_boot() {
+		document.getElementById('message').innerHTML = 'Booting the balancer template ..';
+		document.getElementById('total_percentage').style.width = '90%';
+
+		request('boot', function(response) {
+			if (response=='successful') {
+				window.location.href='.';
+				document.getElementById('total_percentage').style.width = '100%';
+			}
+		});
+	}
+
+	function do_poweroff() {
+		document.getElementById('message').innerHTML = 'Waiting for instances to poweroff ..';
+		document.getElementById('total_percentage').style.width = '30%';
+		scroll(0,document.body.scrollHeight+100);
+		request('clean', function(response) {
+			scroll(0,document.body.scrollHeight+100);
+			if (response=='successful') {
+				scroll(0,document.body.scrollHeight+100);
+				document.getElementById('message').innerHTML = 'Please wait for a while, the page will be auto refreshed in 5 sec...';
+				document.getElementById('total_percentage').style.width = '90%';
+				setTimeout(function() {
+					window.location.href='.';
+				}, 8000);
+			}
+		});
+	}
+	
+</script>
+
+<style TYPE="text/css" MEDIA=screen>
+<!--
+
+.right {
+		float: left;
+		width: 390px;
+}
+
+.popover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1010;
+	display: none;
+	padding: 1px;
+	text-align: left;
+	white-space: normal;
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 6px;
+		 -moz-border-radius: 6px;
+					border-radius: 6px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		 -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+					box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	-webkit-background-clip: padding-box;
+		 -moz-background-clip: padding;
+					background-clip: padding-box;
+}
+
+.popover.right {
+	margin-left: 10px;
+}
+
+.popover .arrow,
+.popover .arrow:after {
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+}
+
+.popover .arrow {
+	border-width: 11px;
+}
+
+.popover .arrow:after {
+	border-width: 10px;
+	content: "";
+}
+
+.popover.right .arrow {
+	top: 50%;
+	left: -11px;
+	margin-top: -11px;
+	border-right-color: #999;
+	border-right-color: rgba(0, 0, 0, 0.25);
+	border-left-width: 0;
+}
+
+.popover.right .arrow:after {
+	bottom: -10px;
+	left: 1px;
+	border-right-color: #ffffff;
+	border-left-width: 0;
+}
+
+.popover-title {
+	padding: 8px 14px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 18px;
+	background-color: #f7f7f7;
+	border-bottom: 1px solid #ebebeb;
+	-webkit-border-radius: 5px 5px 0 0;
+		 -moz-border-radius: 5px 5px 0 0;
+					border-radius: 5px 5px 0 0;
+}
+
+.popover-title:empty {
+	display: none;
+}
+
+.popover-content {
+	padding: 9px 14px;
+}
+
+.emc-title {
+	border-collapse: separate;
+	border-spacing: 0px 0px;
+	color: #333;
+	floatleftfont-family: anivers;
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 27px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	font-family: anivers;
+}
+
+.active-prog {
+	animation-delay: 0s;
+	animation-direction: normal;
+	animation-duration: 2s;
+	animation-fill-mode: none;
+	animation-iteration-count: infinite;
+	animation-name: progress-bar-stripes;
+	animation-timing-function: cubic-bezier(0, 0, 1, 1);
+	background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	background-size: 40px 40px;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px -1px 0px 0px inset;
+	color: #FFF;
+	floatleftfont-family: "Helvetica Neue",Helvetica,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	transition-delay: 0s;
+	transition-duration: 0.6s;
+	transition-propertywidthtransition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+	-moz-box-sizing: border-box;
+	-webkit-animation: progress-bar-stripes 2s linear infinite;
+		-o-animation: progress-bar-stripes 2s linear infinite;
+		animation: progress-bar-stripes 2s linear infinite;
+}
+
+-->
+</style>
+
+	    <div id="status_template" style="display: none">
+		<svg id="svg2448" xmlns="http://www.w3.org/2000/svg" height="48" width="48" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+		 <defs id="defs2450">
+			<radialGradient id="radialGradient1444" gradientUnits="userSpaceOnUse" cy="36.421" cx="24.837" gradientTransform="matrix(1 0 0 .53672 0 16.873)" r="15.645">
+			 <stop id="stop8664" offset="0"/>
+			 <stop id="stop8666" style="stop-opacity:0" offset="1"/>
+			</radialGradient>
+			<linearGradient id="linearGradient2628" y2="24.558" gradientUnits="userSpaceOnUse" x2="-91.513" gradientTransform="matrix(1.0173 -.24356 .24356 1.0173 110.52 -7.9554)" y1="-5.3879" x1="-84.344">
+			 <stop id="stop2266" style="stop-color:#d7e866" offset="0"/>
+			 <stop id="stop2268" style="stop-color:#8cab2a" offset="1"/>
+			</linearGradient>
+			<linearGradient id="linearGradient3406" y2="47.76" gradientUnits="userSpaceOnUse" x2="20.494" y1="6.0098" x1="20.494">
+			 <stop id="stop3402" style="stop-color:#fff" offset="0"/>
+			 <stop id="stop3404" style="stop-color:#fff;stop-opacity:0" offset="1"/>
+			</linearGradient>
+		 </defs>
+		 <g id="layer1">
+			<path id="path8660" style="opacity:.20455;color:black;fill-rule:evenodd;fill:url(#radialGradient1444)" d="m40.482 36.421a15.645 8.3969 0 1 1 -31.289 0 15.645 8.3969 0 1 1 31.289 0z" transform="matrix(1.2145 0 0 .59546 -6.1638 20.313)"/>
+			<path id="path1542" style="stroke-linejoin:round;stroke:#42770c;stroke-linecap:round;fill:url(#linearGradient2628)" d="m33.706 5.4818c-0.55973-0.056806-1.1162 0.21734-1.4038 0.74365l-12.253 22.42-7.878-6.264c-0.70175-0.38345-1.5773-0.13677-1.9607 0.56498l-3.5329 4.5357c-0.38345 0.70174-0.12549 1.577 0.57625 1.9605 0 0 14.384 11.88 14.402 11.889 0.16447 0.08987 0.33646 0.13509 0.5113 0.15718 0.57112 0.07217 1.1556-0.19616 1.4492-0.73343l16.527-30.237c0.383-0.7013 0.125-1.5766-0.577-1.9601l-5.302-2.9097c-0.175-0.0958-0.37-0.1484-0.557-0.1674z"/>
+			<path id="path1544" style="opacity:.4;stroke-linejoin:round;stroke:url(#linearGradient3406);stroke-linecap:round;fill:none" d="m32.939 7.2013-6.209 11.407-5.533 10.061c-0.17848 0.1811-0.12384 0.75409-0.9027 0.95297-0.53887 0.1376-0.63635-0.06289-1.2042-0.42791l-6.9506-5.4922c-0.7733-0.62166-0.74975-0.58936-1.2973-0.03737l-2.7904 3.521c-0.75181 0.80467-0.63536 1.2908 0.30175 1.891 0 0 13.078 10.78 13.095 10.788 0.15556 0.085 0.0892 0.11414 0.75786 0.57814 0.42893 0.29764 0.80754-0.64798 1.0834-1.1529l15.901-29.015c0.36-0.6595 0.333-0.6506-0.331-1.0133l-4.742-2.5144c-0.684-0.3714-0.687-0.3672-1.179 0.454z"/>
+		 </g>
+		</svg>
+	    </div>
+
+<div id="page_main">
+	<div id="when_running" style="display:none">
+		<div id="messages" class="messages">
+		</div>
+		<br/>
+		<div class="emc-title" style="font-size:24px">
+			Scaling: &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="scaling" id="radio_cfg" value="2"  />&nbsp;up/down&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="scaling" id="radio_cnt" value="1"/>&nbsp;in/out
+		</div><br/>
+		<div class="emc-title" style="font-size:24px">
+			Analytics: &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="analytics" id="radio_pred" value="1"/>&nbsp;predifined&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="analytics" id="radio_line" value="2" />&nbsp;linear regression&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="analytics" id="radio_wline" value="4" />&nbsp;weighted linear regression&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="analytics" id="radio_logic" value="3"/>&nbsp;constance
+		</div><br/><div align="right"><input id="update" type="submit" value="Update Selection"></input> <input id="benchmark" type="submit" value="Start Loads Emulator"></input> <input id="poweroff" type="submit" value="Poweroff Instances"></input></div>		
+		<hr/>
+		<div class="emc-title" style="font-size:32px">Performance:</div><br/>
+		<div id="preference" align="center">
+			<canvas id="prefCanvas" width="1000" height="200">Your brower does not support HTML5 Canvas.</canvas>
+			<h3 style="font-family: anivers;">Thoughput: <span id="throughput">0.0</span> KBytes / s</h3>
+		</div><br/>
+		<br/>
+		<div class="emc-title" style="font-size:32px">Agents:</div><br/>
+		<div id="workers" align="center">
+			<table class="table table-bordered table-striped" style="width:1200px">
+				<thead>
+				  <tr class="table_caption">
+					<th data-column="0" class="table_header" colspan="4">
+					</th>
+				  </tr>
+				  <tr class="tablesorter-headerRow">
+					  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner" align="center">Agent IP</div></th>
+					  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner" align="center">Status</div></th>
+					  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner" align="center">Type</div></th>
+					  <th class="sortable normal_column tablesorter-header"><div class="tablesorter-header-inner" align="center">Load</div></th>
+				  </tr>
+				</thead>
+				<tbody id="worker_template">
+				</tbody>
+				<tfoot>
+				  <tr>
+					<td data-column="0" colspan="4">
+					  <strong>Total number of current active agents = <span style="color: orange" id="nworker">0</span></strong>
+					</td>
+				  </tr>
+				</tfoot>
+			</table>
+		</div><br/>
+
+		<br/>
+		<div class="emc-title" style="font-size:32px">Notifications:</div><br/>
+		<div id="notify_list" style="font-size:16px"></div>
+
+		<hr/>
+
+
+
+		<!-- <br/><button id="debug">Debug</button> -->
+
+	</div>
+	<div id="when_not_run" style="display:none">
+		<h3 style="font-family: anivers;">The Resource Scaling Model is not started. You can <a href='#' id='boot'>Boot Instances</a></h3>
+	</div>
+	</br>
+	<div id="progress_bar" style="display: none"><div style="height: 24px; margin-bottom: 20px; overflow: hidden; background-color: #e5e5e5; border-radius: 4px; -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);">
+		<div id="total_percentage" class="active-prog" style="width: 0%; float: left; height: 100%; font-size: 12px; line-height: 20px; color: rgb(255, 255, 255); text-align: center; background-color: rgb(91, 183, 91); box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15) inset; transition: width 0.6s ease 0s;"></div>
+	</div></div></br>
+	<p id="message" style="font-family: anivers; font-size:24px; color: red"></p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+
+import os
+import sys
+import textwrap
+
+msg = """
+You\'ll have to set the VBOX_PROGRAM_PATH and (possibly) the VBOX_SDK_PATH
+environment variables to point to the locations of the VirtualBox
+installation directory and VirtualBox SDK directory, respectively. Otherwise
+this program will not run.
+"""
+
+def prepare_sys_path():
+    vbox_program_path = os.environ.get("VBOX_PROGRAM_PATH", None)
+    vbox_sdk_path = os.environ.get("VBOX_SDK_PATH", None)
+    if vbox_program_path is None:
+        vbox_cfg_file = '/etc/vbox/vbox.cfg'
+        if os.path.isfile(vbox_cfg_file):
+            with open(vbox_cfg_file, 'r') as f:
+                head = 'INSTALL_DIR='
+                for line in f:
+                    if line.startswith(head):
+                        vbox_program_path = line.lstrip(head).rstrip('\n')
+                        break
+    if vbox_program_path is None:
+        dir_list = ('/usr/lib/virtualbox-ose',
+                    '/usr/lib/virtualbox',
+                    '/usr/local/lib/virtualbox',
+                    '/opt/VirtualBox')
+        for d in dir_list:
+            if os.path.isdir(d):
+                vbox_program_path = d
+                break
+    if vbox_program_path is None:
+        print "ERROR: could not locate VirtualBox\n" + msg
+        raise Exception
+    if vbox_sdk_path is None:
+        vbox_sdk_path = os.path.join(vbox_program_path, "sdk")
+    vbox_program_path = os.path.abspath(vbox_program_path)
+    vbox_sdk_path = os.path.abspath(vbox_sdk_path)
+    os.environ['VBOX_PROGRAM_PATH'] = vbox_program_path
+    os.environ['VBOX_SDK_PATH'] = vbox_sdk_path
+    vboxapi_path = os.path.join(vbox_sdk_path, 'installer')
+    sys.path.insert(0, vboxapi_path)
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    if os.path.isdir(os.path.join(base_path, 'vboxgtk')):
+        sys.path.insert(0, base_path)
+
+def test_import():
+    try:
+        import vboxapi
+    except ImportError as ex:
+        print "ERROR: vboxapi package not found\n" + textwrap.dedent(msg)
+        raise ex    
+    except Exception as ex:
+        print "ERROR: exception importing vboxapi\n" + textwrap.dedent(msg)
+        raise ex
+
+
+prepare_sys_path()
+test_import()
+import vboxgtk
+vboxgtk.main()

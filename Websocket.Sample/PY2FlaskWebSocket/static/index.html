@@ -1,0 +1,24 @@
+<script>
+	function onload() {
+		_connection = new WebSocket('ws://'+window.location.host+'/websocket');
+		_connection.onopen = function() { console.log('connected!'); }
+		_connection.onclose = function(evt) { console.log('unconnected!'); }
+		
+		
+		_connection.onmessage = function (evt) {
+			// receive a piece of message from server
+			alert('reply from server: ' + evt.data);
+		}
+		
+		document.getElementById('click_btn').onclick = function() {
+			// send a piece of message to server
+			_connection.send('hello test from web!');
+		}
+	}
+	
+</script>
+
+<body onload="onload()">
+	<input id="click_btn" type="submit" value="Click"></input>
+</body>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="roleauth" extends="struts-default">
+        <action name="addauthority" class="cn.edu.njust.steduman.action.roleauth.AddAuthorityAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="queryauthority" class="cn.edu.njust.steduman.action.roleauth.QueryAuthorityAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="removeauthority" class="cn.edu.njust.steduman.action.roleauth.RemoveAuthorityAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        
+        <action name="addrole" class="cn.edu.njust.steduman.action.roleauth.AddRoleAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="queryrole" class="cn.edu.njust.steduman.action.roleauth.QueryRoleAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="removerole" class="cn.edu.njust.steduman.action.roleauth.RemoveRoleAction">
+            <result name="success">/index.jsp</result>
+        </action>
+
+        <action name="allocauthority" class="cn.edu.njust.steduman.action.roleauth.AllocAuthorityAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="allocrole" class="cn.edu.njust.steduman.action.roleauth.AllocRoleAction">
+            <result name="success">/index.jsp</result>
+        </action>
+    </package>
+</struts>
+

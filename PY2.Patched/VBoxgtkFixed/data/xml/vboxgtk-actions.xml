@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<interface>
+  <object class="GtkUIManager" id="uimanager">
+    <child>
+      <object class="GtkActionGroup" id="actiongroup">
+        <child>
+          <object class="GtkAction" id="menu_vm">
+            <property name="name">menu_vm</property>
+            <property name="label" translatable="yes">_VM</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_newvm">
+            <property name="stock_id">gtk-new</property>
+            <property name="name">action_newvm</property>
+            <property name="label" translatable="yes">_New</property>
+            <signal handler="on_newvm_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_delvm">
+            <property name="stock_id">gtk-stop</property>
+            <property name="name">action_delvm</property>
+            <property name="label" translatable="yes">_Delete</property>
+            <property name="sensitive">FALSE</property>
+            <signal handler="on_delvm_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_runvm">
+            <property name="stock_id">gtk-about</property>
+            <property name="name">action_runvm</property>
+            <property name="label" translatable="yes">_Run</property>
+            <property name="sensitive">FALSE</property>
+            <signal handler="on_runvm_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_sleepvm">
+            <property name="stock_id">gtk-save</property>
+            <property name="name">action_sleepvm</property>
+            <property name="label" translatable="yes">_Sleep</property>
+            <property name="sensitive">FALSE</property>
+            <signal handler="on_sleepvm_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_stopvm">
+            <property name="stock_id">gtk-media-stop</property>
+            <property name="name">action_stopvm</property>
+            <property name="label" translatable="yes">S_top</property>
+            <property name="sensitive">FALSE</property>
+            <signal handler="on_stopvm_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_quit">
+            <property name="stock_id">gtk-quit</property>
+            <property name="name">action_quit</property>
+            <property name="label" translatable="yes">_Quit</property>
+            <signal handler="on_main_destroy" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_help">
+            <property name="name">menu_help</property>
+            <property name="label" translatable="yes">_Help</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="action_about">
+            <property name="stock_id">gtk-about</property>
+            <property name="name">action_about</property>
+            <property name="label" translatable="yes">About</property>
+            <signal handler="on_about_activate" name="activate"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <ui>
+      <menubar name="menubar">
+        <menu action="menu_vm">
+          <menuitem action="action_newvm"/>
+          <menuitem action="action_delvm"/>
+          <separator/>
+          <menuitem action="action_runvm"/>
+          <menuitem action="action_sleepvm"/>
+          <menuitem action="action_stopvm"/>
+          <separator/>
+          <menuitem action="action_quit"/>
+        </menu>
+        <menu action="menu_help">
+          <menuitem action="action_about"/>
+        </menu>
+      </menubar>
+      <toolbar name="toolbar">
+        <toolitem action="action_newvm"/>
+        <toolitem action="action_delvm"/>
+        <separator/>
+        <toolitem action="action_runvm"/>
+        <toolitem action="action_sleepvm"/>
+        <toolitem action="action_stopvm"/>
+      </toolbar>
+    </ui>
+  </object>
+</interface>

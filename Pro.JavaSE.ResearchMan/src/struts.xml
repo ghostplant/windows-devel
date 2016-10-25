@@ -1,0 +1,22 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.custom.i18n.resources" value="globalMessages"/>
+    <constant name="struts.multipart.maxSize" value="900000000"/>
+    <include file="struts_login.xml"/>
+    <include file="struts_index.xml"/>
+    <include file="struts_userdoc.xml"/>
+    <include file="struts_roleauth.xml"/>
+    <include file="struts_academic.xml"/>
+    <include file="struts_achievement.xml"/>
+    <include file="struts_course.xml"/>
+    <include file="struts_documents.xml"/>
+    <include file="struts_research.xml"/>
+    <include file="struts_talents.xml"/>
+    <include file="struts_message.xml"/>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+    </package>
+</struts>

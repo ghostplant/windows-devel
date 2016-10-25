@@ -1,0 +1,34 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<div>
+	<div id="webcam" style="height:480px; width:640px; margin:0 auto; text-align:center"/>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="flowplayer-3.2.13.min.js"></script>
+	<script type="text/javascript" src="flowplayer.playlist-3.2.11.min.js"></script>
+	<script>
+		loadStream = function(divId, ip, streamName) {
+			$f(divId, { src: 'flowplayer-3.2.18.swf', wmode: "opaque"}, {
+				clip: {
+					url: streamName,
+					autoPlay: true,
+					live: true,
+					scaling: "fit",
+					provider: 'influxis',
+					bufferLength: 0,
+					bufferTime: 0,
+				},
+				plugins: {
+					controls: { url:"flowplayer.controls-3.2.16.swf" },
+					influxis: { url: "flowplayer.rtmp-3.2.13.swf", netConnectionUrl: 'rtmp://'+ip+'/flvplayback' }
+				},
+				onStop: function() {
+					console.log('stopped, replaying ..');
+					flowplayer(divId).play();
+				},
+			});
+			flowplayer(divId).play();
+		};
+		var link=window.prompt('请输入播放的视频名称：');
+		loadStream('webcam', window.location.hostname, link);
+	</script>
+</div>
+

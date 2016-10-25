@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Course" table="course">
+    <id column="id" name="id" type="string"/>
+    <property column="name" name="name" type="string"/>
+    <property column="target" name="target" type="string"/>
+    <property column="type" name="type" type="string"/>
+    <property column="creditHour" name="creditHour" type="int"/>
+    <property column="creditValue" name="creditValue" type="float"/>
+    <property column="established" name="established" type="boolean"/>
+    <set cascade="save-update" lazy="true" name="teachers" table="teacherofcourse">
+      <key column="courseId"/>
+      <many-to-many class="cn.edu.njust.steduman.database.Teacher" column="teacherId"/>
+    </set>
+  </class>
+</hibernate-mapping>

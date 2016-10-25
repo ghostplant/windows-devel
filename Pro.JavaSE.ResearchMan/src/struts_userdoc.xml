@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="userdoc" extends="struts-default">
+        <action name="adduser" class="cn.edu.njust.steduman.action.userdoc.AddUserAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="freezeuser" class="cn.edu.njust.steduman.action.userdoc.FreezeUserAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="unfreezeuser" class="cn.edu.njust.steduman.action.userdoc.UnFreezeUserAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="deleteuser" class="cn.edu.njust.steduman.action.userdoc.DeleteUserAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="changepassword" class="cn.edu.njust.steduman.action.userdoc.ChangePasswordAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="edituser" class="cn.edu.njust.steduman.action.userdoc.EditUserAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="exportuser" class="cn.edu.njust.steduman.action.userdoc.ExportUserAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="user.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+
+        <action name="uploaduser" class="cn.edu.njust.steduman.action.userdoc.UploadUserAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">
+                    4000000
+                </param>				
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <param name="path">/webdisk/common</param>
+            <result name="success">/index.jsp</result>
+            <result name="input">/index.jsp</result>
+            <result name="download" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="register.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+        
+    </package>
+</struts>
+

@@ -1,0 +1,28 @@
+【JSP基本语法】
+
+定义域：<%! String context=""; %>
+
+输出值：<%= new java.util.Date() %>
+
+程序段：<% out.println(); %>
+
+注释：<%-- comment --%>
+
+当前页属性：<%@ page pageEncoding="UTF-8" import="java.util.*, java.lang.*" %>
+
+静态包含：<%@ include file="subPage.jsp" %>
+
+动态包含及传参：
+	<jsp:include page="subPage.jsp">
+		<jsp:param name="user" value="ghost" />
+	</jsp:include>
+
+重定向及传参(URL不变)：
+	<jsp:forward page="redirect.jsp">
+		<jsp:param name="user" value="ghost" />
+	</jsp:forward>
+
+JavaBean使用：
+	<jsp:useBean id="objectName" scope="request|page|session|application" class="pack.MyClass" />
+	<jsp:getProperty name="objectName" property="fieldName" />
+	<jsp:setProperty name="objectName" property="fieldName" value="..." />

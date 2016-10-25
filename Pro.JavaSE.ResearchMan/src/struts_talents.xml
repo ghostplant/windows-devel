@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="talents" extends="struts-default">
+        <action name="changestuinfo" class="cn.edu.njust.steduman.action.talents.ChangeStuInfoAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="showstuinfo" class="cn.edu.njust.steduman.action.talents.ShowStuInfoAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="querystuinfo" class="cn.edu.njust.steduman.action.talents.QueryStuInfoAction">
+            <result name="success">/index.jsp</result>
+        </action>
+         <action name="download" class="cn.edu.njust.steduman.action.talents.DownloadAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="enrollandgraduate.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+    </package>
+</struts>
+

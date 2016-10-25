@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+    <field name="name">
+        <field-validator type="requiredstring">
+            <message> 您必须输入项目或课题名称 </message>
+        </field-validator>
+    </field>
+    <field name="number">
+        <field-validator type="requiredstring">
+            <message> 您必须输入项目或课题标号 </message>
+        </field-validator>
+    </field>
+    <field name="source">
+        <field-validator type="requiredstring">
+            <message> 您必须输入项目或课题来源 </message>
+        </field-validator>
+    </field>
+    <field name="type">
+        <field-validator type="requiredstring">
+            <message> 您必须输入项目或课题类别 </message>
+        </field-validator>
+    </field>
+    <field name="startyear">
+        <field-validator type="requiredstring">
+            <message> 您必须输入开始时间 </message>
+        </field-validator>
+    </field>
+    <field name="endyear">
+        <field-validator type="requiredstring">
+            <message> 您必须输入结束时间 </message>
+        </field-validator>
+    </field>
+    <field name="cost">
+        <field-validator type="double">
+            <message> 您必须输入实数 </message>
+        </field-validator>
+    </field>
+    <field name="teacher1">
+        <field-validator type="requiredstring">
+            <message> 您必须输入研究人员 </message>
+        </field-validator>
+    </field>
+    <field name="rank1">
+        <field-validator type="requiredstring">
+            <message> 您必须输入研究人员排名 </message>
+        </field-validator>
+    </field>
+    
+</validators>

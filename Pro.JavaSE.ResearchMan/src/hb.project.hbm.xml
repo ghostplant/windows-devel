@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Project" table="project">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="startYear" name="startYear" type="int"/>
+    <property column="endYear" name="endYear" type="int"/>
+    <property column="cost" name="cost" type="float"/>
+    <property column="name" name="name" type="string"/>
+    <property column="number" name="number" type="string"/>
+    <property column="source" name="source" type="string"/>
+    <property column="status" name="status" type="string"/>
+    <property column="type" name="type" type="string"/>
+    <set cascade="all" inverse="false" name="teacherOfProjects">
+      <key column="projectId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.TeacherOfProject"/>
+    </set>
+  </class>
+</hibernate-mapping>

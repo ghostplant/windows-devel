@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Student" table="student">
+    <id column="id" name="id" type="string"/>
+    <property column="dormNo" name="dormNo" type="string"/>
+    <property column="dormPhone" name="dormPhone" type="string"/>
+    <property column="position" name="position" type="string"/>
+    <property column="awards" name="awards" type="string"/>
+    <property column="nation" name="nation" type="string"/>
+    <property column="degree" name="degree" type="string"/>
+    <property column="teacherId" name="teacherId" type="string"/>
+    <property column="entranceYear" name="entranceYear" type="int"/>
+    <property column="graduationYear" name="graduationYear" type="int"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,451 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: vboxgtk 0.5.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-16 13:12+0200\n"
+"PO-Revision-Date: 2009-08-10 23:07+0200\n"
+"Last-Translator: Ghostplant <ghostplant@qq.com>\n"
+"Language-Team: PKU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "Virtual machine named '%s' already exists."
+msgstr "名字为 '%s' 的虚拟机已经存在。"
+
+msgid "Cannot create Virtual Machine"
+msgstr "无法创建虚拟机"
+
+msgid "Add..."
+msgstr "添加..."
+
+msgid "Type: "
+msgstr "类型: "
+
+msgid "Device: "
+msgstr "设备: "
+
+msgid "Backend: "
+msgstr "音频驱动: "
+
+msgid "Controller: "
+msgstr "设备芯片: "
+
+msgid "If enabled, the VM will have direct access to the dvd device (necessary for writing)"
+msgstr "如果开启，虚拟机可以直接访问光驱设备（写入时需要）"
+
+msgid "<b>Graphics</b>"
+msgstr "<b>图形</b>"
+
+msgid "Accelerate 2D video"
+msgstr "启用2D视频加速"
+
+msgid "Accelerate 3D"
+msgstr "启用3D加速"
+
+msgid "<b>Motherboard</b>"
+msgstr "<b>扩展特性</b>"
+
+msgid "Chipset: "
+msgstr "芯片组: "
+
+#: data/xml/vboxgtk-actions.xml:9
+msgid "_VM"
+msgstr "虚拟机(_V)"
+
+#: data/xml/vboxgtk-actions.xml:16
+msgid "_New"
+msgstr "新建虚拟机(_N)"
+
+#: data/xml/vboxgtk-actions.xml:24
+msgid "_Delete"
+msgstr "删除虚拟机(_D)"
+
+#: data/xml/vboxgtk-actions.xml:33
+msgid "_Run"
+msgstr "启动虚拟机(_R)"
+
+#: data/xml/vboxgtk-actions.xml:42
+msgid "_Sleep"
+msgstr "快速休眠(_S)"
+
+#: data/xml/vboxgtk-actions.xml:51
+msgid "S_top"
+msgstr "强制停止(_T)"
+
+#: data/xml/vboxgtk-actions.xml:60
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#: data/xml/vboxgtk-actions.xml:67
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: data/xml/vboxgtk-actions.xml:74 data/xml/vboxgtk.xml:1607
+msgid "Manage media"
+msgstr "管理媒体介质"
+
+#: data/xml/vboxgtk-actions.xml:81
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: data/xml/vboxgtk-actions.xml:88
+msgid "About"
+msgstr "关于"
+
+#: data/xml/vboxgtk.xml:129
+msgid "VBoxGtk"
+msgstr "Oracle VM VirtualBox 管理器 (GTK+)"
+
+#: data/xml/vboxgtk.xml:176
+msgid "VM Name"
+msgstr "VM 名字"
+
+#: data/xml/vboxgtk.xml:187
+msgid "State"
+msgstr "状态"
+
+#: data/xml/vboxgtk.xml:240 data/xml/vboxgtk.xml:1370
+msgid "OS Type: "
+msgstr "OS 类型: "
+
+#: data/xml/vboxgtk.xml:272
+msgid "Use Hardware Virtualization Extensions"
+msgstr "使用硬件虚拟化扩展"
+
+#: data/xml/vboxgtk.xml:292
+msgid "<b>General</b>"
+msgstr "<b>通用</b>"
+
+#: data/xml/vboxgtk.xml:322
+msgid "System (MB):"
+msgstr "系统 (MB):"
+
+#: data/xml/vboxgtk.xml:348
+msgid "Video (MB):"
+msgstr "显示 (MB):"
+
+#: data/xml/vboxgtk.xml:380
+msgid "<b>Memory</b>"
+msgstr "<b>内存</b>"
+
+#: data/xml/vboxgtk.xml:411
+msgid "HD: "
+msgstr "硬盘: "
+
+#: data/xml/vboxgtk.xml:446
+msgid "CD/DVD: "
+msgstr "CD/DVD: "
+
+#: data/xml/vboxgtk.xml:477
+msgid "DVD passthrough"
+msgstr "DVD 直通"
+
+#: data/xml/vboxgtk.xml:496
+msgid "Floppy: "
+msgstr "软驱: "
+
+#: data/xml/vboxgtk.xml:522
+msgid "<b>Media</b>"
+msgstr "<b>媒介</b>"
+
+#: data/xml/vboxgtk.xml:539
+msgid "Settings"
+msgstr "配置"
+
+#: data/xml/vboxgtk.xml:578
+msgid "NIC: "
+msgstr "NIC: "
+
+#: data/xml/vboxgtk.xml:607
+msgid "NIC device: "
+msgstr "NIC 设备: "
+
+#: data/xml/vboxgtk.xml:640
+msgid "Host interface: "
+msgstr "主机接口: "
+
+#: data/xml/vboxgtk.xml:667
+msgid "Internal network: "
+msgstr "内部网络: "
+
+#: data/xml/vboxgtk.xml:694
+msgid "MAC address: "
+msgstr "MAC 地址: "
+
+#: data/xml/vboxgtk.xml:718
+msgid "Generate"
+msgstr "重新生成"
+
+#: data/xml/vboxgtk.xml:748
+msgid "Cable connected"
+msgstr "插入网线"
+
+#: data/xml/vboxgtk.xml:762
+msgid "Trace"
+msgstr "跟踪"
+
+#: data/xml/vboxgtk.xml:783
+msgid "Trace file: "
+msgstr "跟踪文件: "
+
+#: data/xml/vboxgtk.xml:802 data/xml/vboxgtk.xml:1491
+msgid "Browse..."
+msgstr "浏览..."
+
+#: data/xml/vboxgtk.xml:827
+msgid "<b>Network</b>"
+msgstr "<b>网络</b>"
+
+#: data/xml/vboxgtk.xml:854
+msgid "Audio Device: "
+msgstr "声音设备: "
+
+#: data/xml/vboxgtk.xml:885
+msgid "<b>Audio</b>"
+msgstr "<b>声音</b>"
+
+#: data/xml/vboxgtk.xml:906
+msgid "Devices"
+msgstr "设备"
+
+#: data/xml/vboxgtk.xml:940 data/xml/vboxgtk.xml:1065
+#: data/xml/vboxgtk.xml:1648 data/xml/vboxgtk.xml:1819
+msgid "Name"
+msgstr "名字"
+
+#: data/xml/vboxgtk.xml:951
+msgid "Folder"
+msgstr "文件夹"
+
+#: data/xml/vboxgtk.xml:962 data/xml/vboxgtk.xml:1271
+msgid "Writable"
+msgstr "可写"
+
+#: data/xml/vboxgtk.xml:985
+msgid "gtk-remove"
+msgstr "gtk-remove"
+
+#: data/xml/vboxgtk.xml:1000 data/xml/vboxgtk.xml:1311
+#: data/xml/vboxgtk.xml:1579
+msgid "gtk-add"
+msgstr "gtk-add"
+
+#: data/xml/vboxgtk.xml:1030
+msgid "Shared folders"
+msgstr "共享文件夹"
+
+#: data/xml/vboxgtk.xml:1091
+msgid "Restore"
+msgstr "恢复"
+
+#: data/xml/vboxgtk.xml:1106 data/xml/vboxgtk.xml:1749
+msgid "Delete"
+msgstr "删除"
+
+#: data/xml/vboxgtk.xml:1121
+msgid "Take"
+msgstr "截取"
+
+#: data/xml/vboxgtk.xml:1151
+msgid "Snapshots"
+msgstr "快照"
+
+#: data/xml/vboxgtk.xml:1184
+msgid "Add shared folder"
+msgstr "添加共享文件夹"
+
+#: data/xml/vboxgtk.xml:1214
+msgid "Path:"
+msgstr "路径:"
+
+#: data/xml/vboxgtk.xml:1237
+msgid "Name:"
+msgstr "名字:"
+
+#: data/xml/vboxgtk.xml:1297 data/xml/vboxgtk.xml:1565
+msgid "gtk-cancel"
+msgstr "gtk-cancel"
+
+#: data/xml/vboxgtk.xml:1398
+msgid "VM Name:  "
+msgstr "VM 名字:  "
+
+#: data/xml/vboxgtk.xml:1424
+msgid "Image: "
+msgstr "镜像: "
+
+#: data/xml/vboxgtk.xml:1469
+msgid "File name: "
+msgstr "文件名: "
+
+#: data/xml/vboxgtk.xml:1511
+msgid "Size (MB):  "
+msgstr "大小 (MB):  "
+
+#: data/xml/vboxgtk.xml:1540
+msgid "Allocate space dynamically"
+msgstr "动态分配空间"
+
+#: data/xml/vboxgtk.xml:1659 data/xml/vboxgtk.xml:1830
+msgid "Location"
+msgstr "位置"
+
+#: data/xml/vboxgtk.xml:1670 data/xml/vboxgtk.xml:1841
+msgid "Used By"
+msgstr "使用者"
+
+#: data/xml/vboxgtk.xml:1692 data/xml/vboxgtk.xml:1863
+msgid "Register..."
+msgstr "注册..."
+
+#: data/xml/vboxgtk.xml:1707 data/xml/vboxgtk.xml:1878
+msgid "Unregister"
+msgstr "取消注册"
+
+#: data/xml/vboxgtk.xml:1733
+msgid "New..."
+msgstr "新建..."
+
+#: data/xml/vboxgtk.xml:1777
+msgid "<b>Hard Disks</b>"
+msgstr "<b>硬盘</b>"
+
+#: data/xml/vboxgtk.xml:1906
+msgid "<b>CD/DVD Images</b>"
+msgstr "<b>CD/DVD 镜像</b>"
+
+#: data/xml/vboxgtk.xml:1921
+msgid "gtk-close"
+msgstr "gtk-close"
+
+#: data/xml/vboxgtk.xml:1948
+msgid "About VBoxGtk"
+msgstr "关于 VBoxGtk"
+
+#: data/xml/vboxgtk.xml:1955
+msgid "Copyright (C) 2008-2011 Francisco J. Vazquez Araujo"
+msgstr "版权 (C) 2015 ghostplant@qq.com 中国大陆"
+
+#: data/xml/vboxgtk.xml:1956
+msgid "A GTK+ frontend for VirtualBox"
+msgstr "一个基于 GTK+ 的 VirtualBox 管理器"
+
+#: data/xml/vboxgtk.xml:1957
+msgid ""
+"VBoxGtk is free software: you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation, either version 3 of the License, or (at your option) any later "
+"version.\n"
+"\n"
+"VBoxGtk is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"VBoxGtk.  If not, see http://www.gnu.org/licenses/"
+msgstr ""
+"..."
+
+#: vboxgtk/vboxgtk_iface.py:44
+msgid "Null"
+msgstr "空"
+
+#: vboxgtk/vboxgtk_iface.py:45
+msgid "Powered Off"
+msgstr "已关机"
+
+#: vboxgtk/vboxgtk_iface.py:46
+msgid "Saved"
+msgstr "已保存"
+
+#: vboxgtk/vboxgtk_iface.py:47
+msgid "Aborted"
+msgstr "异常中止"
+
+#: vboxgtk/vboxgtk_iface.py:48
+msgid "Running"
+msgstr "运行中"
+
+#: vboxgtk/vboxgtk_iface.py:49
+msgid "Paused"
+msgstr "暂停"
+
+#: vboxgtk/vboxgtk_iface.py:50
+msgid "Stuck"
+msgstr "无响应"
+
+#: vboxgtk/vboxgtk_iface.py:51
+msgid "Starting"
+msgstr "运行中"
+
+#: vboxgtk/vboxgtk_iface.py:52
+msgid "Stopping"
+msgstr "关闭中"
+
+#: vboxgtk/vboxgtk_iface.py:53
+msgid "Saving"
+msgstr "保存中"
+
+#: vboxgtk/vboxgtk_iface.py:54
+msgid "Restoring"
+msgstr "恢复中"
+
+#: vboxgtk/vboxgtk_iface.py:55
+msgid "Setting Up"
+msgstr "正在安装"
+
+#: vboxgtk/vboxgtk_iface.py:231
+msgid "New VDI"
+msgstr "新建 VDI"
+
+#: vboxgtk/vboxgtk_iface.py:234
+msgid "New VM"
+msgstr "新建 VM"
+
+#: vboxgtk/vboxgtk_iface.py:289 vboxgtk/vboxgtk_iface.py:533
+msgid "Save..."
+msgstr "保存..."
+
+#: vboxgtk/vboxgtk_iface.py:298
+#, python-format
+msgid "Are you sure you want to delete the virtual machine '%s'?"
+msgstr "您确定要删除虚拟机 '%s' 吗？"
+
+#: vboxgtk/vboxgtk_iface.py:299
+msgid "The machine settings and its hard disks data will be lost."
+msgstr "虚拟机设置将会被删除，但磁盘文件会保留。"
+
+#: vboxgtk/vboxgtk_iface.py:312
+msgid "The VM could not be started"
+msgstr "无法启动虚拟机"
+
+#: vboxgtk/vboxgtk_iface.py:313
+msgid ""
+"This usually means that the vboxdrv module is not loaded.\n"
+"Try again after loading the module."
+msgstr ""
+"这可能是vboxdrv驱动工作不正常.\n"
+"请确保正确安装linux-headers-generic和virtualbox-dkms并重试"
+
+#: vboxgtk/vboxgtk_iface.py:330
+msgid "(none)"
+msgstr "(无)"
+
+#: vboxgtk/vboxgtk_iface.py:383
+msgid "New hard disk image"
+msgstr "新建硬盘镜像"
+
+#: vboxgtk/vboxgtk_iface.py:406
+msgid "Open..."
+msgstr "打开..."
+
+#: vboxgtk/vboxgtk_iface.py:441
+msgid "Are you sure you want to delete the hd image?"
+msgstr "您确定要删除该硬盘镜像吗？"
+
+#: vboxgtk/vboxgtk_iface.py:442
+msgid "The file will be permantently lost."
+msgstr "文件将会被永久删除。"

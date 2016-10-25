@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Laboratory" table="laboratory">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="personnelCount" name="personnelCount" type="int"/>
+    <property column="deviceCount" name="deviceCount" type="int"/>
+    <property column="deviceCost" name="deviceCost" type="float"/>
+    <property column="name" name="name" type="string"/>
+    <set cascade="all" inverse="false" name="devices">
+      <key column="laboratoryId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.Device"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.TeacherOfAchievement" table="teacherofachievement">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="rank" name="rank" type="int"/>
+    <property column="achievementId" name="achievementId" type="int"/>
+    <property column="teacherId" name="teacherId" type="string"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="course" extends="struts-default">
+        <action name="addcourse" class="cn.edu.njust.steduman.action.course.AddCourseAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="course.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+         <action name="querycourse" class="cn.edu.njust.steduman.action.course.QueryCourseAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="changecourse" class="cn.edu.njust.steduman.action.course.ChangeCourseAction">
+            <result name="success">/index.jsp</result>
+        </action>
+       
+    </package>
+</struts>
+

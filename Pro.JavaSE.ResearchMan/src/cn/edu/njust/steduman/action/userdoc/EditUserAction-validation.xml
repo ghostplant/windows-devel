@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN" 
+"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+
+<validators>
+    <field name="username">
+        <field-validator type="requiredstring">
+            <param name="trim">true</param>
+            <message>必须输入名字</message>
+        </field-validator>
+    </field>
+    
+    <field name="mobilePhone">
+        <field-validator type="int">
+            <param name="trim">true</param>
+            <message>手机号必须为数字</message>
+        </field-validator>
+    </field>
+    <field name="officePhone">
+        <field-validator type="int">
+            <param name="trim">true</param>
+            <message>办公电话号必须为数字</message>
+        </field-validator>
+    </field>
+    
+    
+    <!--
+    <field name="birthady">
+        <field-validator type="date"> 
+            <param name="min">1900-01-01</param> 
+            <param name="max">2020-12-31</param> 
+            <message>时间必须在${min}-${max}之间</message> 
+        </field-validator> 
+    </field>
+    
+    <field name="graduationDate">
+        <field-validator type="date"> 
+            <param name="min">1900-01-01</param> 
+            <param name="max">2020-12-31</param> 
+            <message>时间必须在${min}-${max}之间</message> 
+        </field-validator> 
+    </field>
+    这里写注释-->
+</validators>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenuBar" constructor="uimanager" id="menubar"> 
+    <property name="visible">True</property> 
+  </object>
+  <object class="GtkToolbar" constructor="uimanager" id="toolbar">
+    <property name="visible">True</property>
+    <property name="toolbar_style">both-horiz</property>
+  </object>
+</interface>

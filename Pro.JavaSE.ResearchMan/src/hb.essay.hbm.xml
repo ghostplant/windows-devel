@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Essay" table="essay">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="meetingId" name="meetingId" type="int"/>
+    <property column="totalAuthor" name="totalAuthor" type="int"/>
+    <property column="treatiseTotalKWord" name="treatiseTotalKWord" type="int"/>
+    <property column="treatiseSelfKWord" name="treatiseSelfKWord" type="int"/>
+    <property column="foreignPeriodical" name="foreignPeriodical" type="boolean"/>
+    <property column="title" name="title" type="string"/>
+    <property column="style" name="style" type="string"/>
+    <property column="type" name="type" type="string"/>
+    <property column="firstAuthorId" name="firstAuthorId" type="string"/>
+    <property column="memo" name="memo" type="string"/>
+    <property column="periodicalName" name="periodicalName" type="string"/>
+    <property column="periodicalHolder" name="periodicalHolder" type="string"/>
+    <property column="periodicalIssnNo" name="periodicalIssnNo" type="string"/>
+    <property column="periodicalCnNo" name="periodicalCnNo" type="string"/>
+    <property column="periodicalPublish" name="periodicalPublish" type="string"/>
+    <property column="meetingIsbnNo" name="meetingIsbnNo" type="string"/>
+    <property column="treatisePublisher" name="treatisePublisher" type="string"/>
+    <property column="treatiseBookNo" name="treatiseBookNo" type="string"/>
+    <set cascade="all" inverse="false" name="personsOfEssays">
+      <key column="essayId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.PersonOfEssay"/>
+    </set>
+    <set cascade="all" inverse="false" name="funds">
+      <key column="essayId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.Fund"/>
+    </set>
+  </class>
+</hibernate-mapping>

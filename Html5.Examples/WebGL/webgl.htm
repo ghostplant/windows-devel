@@ -1,0 +1,79 @@
+<script type="text/javascript" src="gl_Matrix_latest.js"></script>
+<script type="text/javascript" src="glTextureShader_latest.js"></script>
+
+<script type="text/javascript">
+	var currentDirection = "stop";
+	var atX = 1, atY = 1;
+
+	var callback = function(content) {
+		if (content!=null && content!='') {
+			var validDirection=content.answer;
+			switch (content.answer) {
+				case "front": atY=Math.min(atY+0.1,4); break;
+				case "back": atY=Math.max(atY-0.1,-4); break;
+				case "left": atX=Math.max(atX-0.1,-5); break;
+				case "right": atX=Math.min(atX+0.1,5); break;
+				case "left-front": atX=Math.max(atX-0.1,-5);atY=Math.min(atY+0.1,4); break;
+				case "left-back": atX=Math.max(atX-0.1,-5);atY=Math.max(atY-0.1,-4); break;
+				case "right-front": atX=Math.min(atX+0.1,5);atY=Math.min(atY+0.1,4); break;
+				case "right-back": atX=Math.min(atX+0.1,5);atY=Math.max(atY-0.1,-4); break;
+				default: validDirection=currentDirection;
+			}
+			currentDirection=validDirection;
+		}
+
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		gl.perspective(45.0, 1.2, 0.1, 200);
+		gl.lookAt([0,5,10], [0,0,-1], [0,1,0]);
+		gl.loadIdentity();
+		gl.translate([ atX, atY, 0 ]);
+		gl.rotate(rad, [ 0, 1, 1 ]);
+		rad += 0.1;
+		gl.displayObject(pos, color, null, gl.TRIANGLE_STRIP, 6);
+
+		setTimeout(function() {
+			platform_ai_js_exec.executeMultipleProcess( currentList, { "atX": atX, "atY": atY, "direction": currentDirection }, callback)
+		}, 40);
+	};
+	
+	function renderSence() {
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		gl.perspective(45.0, 1.2, 0.1, 500);
+		gl.lookAt([0,5,10], [0,0,-1], [0,1,0]);
+		gl.loadIdentity();
+		gl.rotate(rad, [ 0, 1, 1 ]);
+		gl.translate([ 1, 0, 0 ]);
+		gl.rotate(rad, [ 1, 1, 0 ]);
+		rad += 0.1;
+		gl.displayObject(pos, color, null, gl.TRIANGLE_STRIP, 6);
+		
+		setTimeout(renderSence, 40);
+	}
+
+	function initBackground() {
+		gl = glTextureShader_latest.loadWebGL('myCanvas');
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.enable(gl.DEPTH_TEST);
+
+		pos = gl.prepareObject([0, 0, 0,
+					 1, 0, 0,
+					 0, 1, 0,
+					 0, 0, 1,
+					 0, 0, 0,
+					 1, 0, 0 ]);
+
+		color = gl.prepareObject([1, 0, 0, 1,
+					   0, 1, 0, 1,
+					   0, 0, 1, 1,
+					   1, 0, 1, 1,
+					   0, 1, 1, 1,
+					   1, 1, 0, 1 ]);
+		
+		rad = 0.0;
+		renderSence();
+	}
+</script>
+
+<body onLoad="initBackground()">
+	<canvas id="myCanvas" width="680" height="600">HTML5 Canvas Not Supported.</canvas>
+</body>

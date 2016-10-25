@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="show_sql">true</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/steduman</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root</property>
+    <mapping resource="hb.person.hbm.xml"/>
+    <mapping resource="hb.email.hbm.xml"/>
+    <mapping resource="hb.experience.hbm.xml"/>
+    <mapping resource="hb.teacher.hbm.xml"/>
+    <mapping resource="hb.student.hbm.xml"/>
+    <mapping resource="hb.role.hbm.xml"/>
+    <mapping resource="hb.authority.hbm.xml"/>
+    <mapping resource="hb.achievement.hbm.xml"/>
+    <mapping resource="hb.teacherofachievement.hbm.xml"/>
+    <mapping resource="hb.patent.hbm.xml"/>
+    <mapping resource="hb.teacherofpatent.hbm.xml"/>
+    <mapping resource="hb.meeting.hbm.xml"/>
+    <mapping resource="hb.essay.hbm.xml"/>
+    <mapping resource="hb.meetingreport.hbm.xml"/>
+    <mapping resource="hb.cultivation.hbm.xml"/>
+    <mapping resource="hb.project.hbm.xml"/>
+    <mapping resource="hb.teacherofproject.hbm.xml"/>
+    <mapping resource="hb.personofessay.hbm.xml"/>
+    <mapping resource="hb.course.hbm.xml"/>
+    <mapping resource="hb.fund.hbm.xml"/>
+    <mapping resource="hb.cooperation.hbm.xml"/>
+    <mapping resource="hb.laboratory.hbm.xml"/>
+    <mapping resource="hb.device.hbm.xml"/>
+    <mapping resource="hb.library.hbm.xml"/>
+    <mapping resource="hb.subscribe.hbm.xml"/>
+    <mapping resource="hb.message.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Teacher" table="teacher">
+    <id column="id" name="id" type="string"/>
+    <property column="department" name="department" type="string"/>
+    <property column="passwordHashCode" name="passwordHashCode" type="string"/>
+    <property column="officeAddress" name="officeAddress" type="string"/>
+    <property column="officePhone" name="officePhone" type="string"/>
+    <property column="major" name="major" type="string"/>
+    <property column="contactAddress" name="contactAddress" type="string"/>
+    <property column="expertTitle" name="expertTitle" type="string"/>
+    <property column="finalDegree" name="finalDegree" type="string"/>
+    <property column="finalSchool" name="finalSchool" type="string"/>
+    <property column="finalMajor" name="finalMajor" type="string"/>
+    <property column="workingSection" name="workingSection" type="string"/>
+    <property column="graduationDate" name="graduationDate" type="java.util.Date"/>
+    <property column="birthDate" name="birthDate" type="java.util.Date"/>
+    <property column="freeze" name="freeze" type="boolean"/>
+    <set cascade="save-update" lazy="true" name="roles" table="play">
+      <key column="teacherId"/>
+      <many-to-many class="cn.edu.njust.steduman.database.Role" column="roleId"/>
+    </set>
+    <set cascade="save-update" lazy="true" name="courses" table="teacherofcourse">
+      <key column="teacherId"/>
+      <many-to-many class="cn.edu.njust.steduman.database.Course" column="courseId"/>
+    </set>
+    <set cascade="all" inverse="false" name="teacherOfAchievements">
+      <key column="teacherId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.TeacherOfAchievement"/>
+    </set>
+    <set cascade="all" inverse="false" name="teacherOfPatents">
+      <key column="teacherId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.TeacherOfPatent"/>
+    </set>
+    <set cascade="all" inverse="false" name="teacherOfProjects">
+      <key column="teacherId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.TeacherOfProject"/>
+    </set>
+    <set cascade="all" inverse="false" name="sendedMessages">
+      <key column="srcTeacherId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.Message"/>
+    </set>
+    <set cascade="all" inverse="false" name="deliveredMessages">
+      <key column="dstTeacherId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.Message"/>
+    </set>
+  </class>
+</hibernate-mapping>

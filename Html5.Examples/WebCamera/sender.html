@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="recorder.js"></script>
+<body>
+	<video id="videoElement" autoplay="true" width="500" height="400"></video>
+	<canvas style="display: none" id="channel"></canvas>
+	<script>
+		var ws = new WebSocket('ws://' + window.location.host
+				+ '/HTML5Test/websocket');
+
+		navigator.getUserMedia = navigator.getUserMedia
+				|| navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+				|| navigator.msGetUserMedia || navigator.oGetUserMedia;
+
+		AudioContext = AudioContext || webkitAudioContext;
+
+		ws.onopen = function() {
+			navigator.getUserMedia({
+				video : true,
+				audio : true
+			}, function(stream) {
+				var canvas = document.querySelector("#channel");
+				var video = document.querySelector("#videoElement");
+				video.src = window.URL.createObjectURL(stream);
+				var mss = new AudioContext().createMediaStreamSource(stream);
+				var rec = new Recorder(mss);
+				rec.record();
+				setInterval(function() {
+					rec.exportWAV(function(blob) {
+						ws.send(blob);
+						rec.clear();
+					});
+				}, 2000);
+				setInterval(function() {
+					canvas.getContext('2d').drawImage(video, 0, 0,
+							canvas.width, canvas.height);
+					ws.send(canvas.toDataURL());
+				}, 300);
+			}, function(err) {
+			});
+		};
+	</script>
+
+</body>
+</html>

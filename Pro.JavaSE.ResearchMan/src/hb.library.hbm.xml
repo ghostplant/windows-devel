@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Library" table="library">
+    <id column="id" name="id" type="int"/>
+    <property column="databaseTypeAmount" name="databaseTypeAmount" type="int"/>
+    <property column="fgnStoreAmount" name="fgnStoreAmount" type="float"/>
+    <property column="chsStoreAmout" name="chsStoreAmout" type="float"/>
+    <property column="fgnPeriodicalAmount" name="fgnPeriodicalAmount" type="float"/>
+    <property column="chsPeriodicalAmount" name="chsPeriodicalAmount" type="float"/>
+    <property column="fgnEBookAmount" name="fgnEBookAmount" type="float"/>
+    <property column="chsEBookAmount" name="chsEBookAmount" type="float"/>
+    <property column="fgnEPeriodicalAmount" name="fgnEPeriodicalAmount" type="float"/>
+    <property column="chsEPeriodicalAmount" name="chsEPeriodicalAmount" type="float"/>
+  </class>
+</hibernate-mapping>

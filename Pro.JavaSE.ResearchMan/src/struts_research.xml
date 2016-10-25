@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="research" extends="struts-default">
+        <action name="addproject" class="cn.edu.njust.steduman.action.research.AddProjectAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="project.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+        <action name="changeproject" class="cn.edu.njust.steduman.action.research.ChangeProjectAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="queryproject" class="cn.edu.njust.steduman.action.research.QueryProjectAction">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="researcher" class="cn.edu.njust.steduman.action.research.ResearcherAction">
+            <result name="success">/index.jsp</result>
+            <result name="input" type="stream">
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">
+                    attachment;filename="researcher.xls"
+                </param>
+                <param name="bufferSize">40960</param>
+            </result>
+        </action>
+    </package>
+</struts>
+

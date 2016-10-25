@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Person" table="person">
+    <id column="id" name="id" type="string"/>
+    <property column="name" name="name" type="string"/>
+    <property column="male" name="male" type="boolean"/>
+    <property column="mobilePhone" name="mobilePhone" type="string"/>
+    <property column="teacher" name="teacher" type="boolean"/>
+    <set cascade="all" inverse="false" name="personOfEssays">
+      <key column="personId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.PersonOfEssay"/>
+    </set>
+    <set cascade="all" inverse="false" name="emails">
+      <key column="personId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.Email"/>
+    </set>
+    <set cascade="all" inverse="false" name="experiences">
+      <key column="personId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.Experience"/>
+    </set>
+  </class>
+</hibernate-mapping>

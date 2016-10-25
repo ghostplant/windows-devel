@@ -1,0 +1,10 @@
+<script type="text/javascript">
+	var worker = new Worker("worker.js");
+	
+	worker.postMessage("hello world");
+	
+	worker.onmessage = function(evt) {
+		alert(evt.data);
+	}
+</script>
+

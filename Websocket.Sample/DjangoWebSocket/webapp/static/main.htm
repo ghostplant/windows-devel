@@ -1,0 +1,24 @@
+<script>
+	function request(url, response, args) {
+		var http=new XMLHttpRequest();
+		if (args!=null && args.length>0)
+			url+='?'+args;
+		http.onreadystatechange = function() { (http.readyState==4) && (http.status==200) && response(http.responseText) };
+		http.open('get', url, true);
+		http.send(null);
+	}
+
+	function onload() {
+		document.getElementById('http-get').onclick = function() {
+			request('/', function(data) {
+				alert(data);
+			}, 'cmd=test');
+		};
+	}
+</script>
+
+<body onload="onload()">
+	<button id="http-get">HttpGet</button>
+</body>
+
+

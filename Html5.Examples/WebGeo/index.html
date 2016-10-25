@@ -1,0 +1,15 @@
+<script type="text/javascript">
+	function goToGeo(ip) {
+	}
+	
+	navigator.geolocation.getCurrentPosition(function (pos) {
+		var lat = pos.coords.latitude,
+			long = pos.coords.longitude,
+			acc = pos.coords.accuracy;
+		alert(lat+", "+long+", "+acc);
+	}, function() {
+		window.open('1.1.1.1');
+	});
+	
+	// var jp = [139.0, 35.0], sg = [103.0, 1.0], gm = [13.0, 52.0];
+</script>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Authority" table="authority">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="name" name="name" type="string"/>
+    <property column="function" name="function" type="string"/>
+    <set cascade="save-update" name="roles" table="access">
+      <key column="authorityId"/>
+      <many-to-many class="cn.edu.njust.steduman.database.Role" column="roleId"/>
+    </set>
+  </class>
+</hibernate-mapping>

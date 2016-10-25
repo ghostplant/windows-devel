@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cn.edu.njust.steduman.database.Achievement" table="achievement">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="finishCount" name="finishCount" type="int"/>
+    <property column="name" name="name" type="string"/>
+    <property column="award" name="award" type="string"/>
+    <property column="level" name="level" type="string"/>
+    <property column="certificationId" name="certificationId" type="string"/>
+    <property column="type" name="type" type="string"/>
+    <property column="date" name="date" type="java.util.Date"/>
+    <set cascade="all" inverse="false" name="teacherOfAchievements">
+      <key column="achievementId"/>
+      <one-to-many class="cn.edu.njust.steduman.database.TeacherOfAchievement"/>
+    </set>
+  </class>
+</hibernate-mapping>
