@@ -1,0 +1,20 @@
+﻿<controls:ChildWindow x:Class="IMWebClient.ChildFindFriends"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="400" Height="323" 
+           Title="查找好友" Closed="ChildWindow_Closed">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="textBlock1" Text="好友ID或昵称（通过'*'字符模糊匹配）：" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Right" Margin="0,31,12,0" Name="textBox1" VerticalAlignment="Top" Width="354" />
+        <ListBox Height="152" HorizontalAlignment="Left" Margin="12,60,0,0" Name="listBox1" VerticalAlignment="Top" Width="354" />
+        <Button Content="取消" Height="23" HorizontalAlignment="Right" Margin="0,12,12,0" Name="CancelButton" Width="75" Grid.Row="1" Click="CancelButton_Click" />
+        <Button Content="查找" Height="23" HorizontalAlignment="Right" Margin="0,12,102,0" Name="OKButton" Width="75" Grid.Row="1" Click="OKButton_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,227,0,0" Name="textBlock2" Text="添加到分组：" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="84,223,0,0" Name="comboBox1" VerticalAlignment="Top" Width="282" />
+    </Grid>
+</controls:ChildWindow>

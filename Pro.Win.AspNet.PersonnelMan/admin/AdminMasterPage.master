@@ -1,0 +1,64 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminMasterPage.master.cs" Inherits="admin_AdminMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>人事管理系统 - 后台管理</title>
+
+    <style type="text/css">
+        <!--
+        .NORMAL {font-size: 12px; color:blue}
+        .NORMAL a{text-decoration:none;color:blue;}
+        .NORMAL a:hover{text-decoration:none;color:red;}
+        .NORMAL a:link,a:actived,a:visited{text-decoration:none;}
+        .MAIN {font-size:14px; color:#000000}
+        .MAIN a{text-decoration:none;color:blue;}
+        .MAIN a:hover{text-decoration:none;color:red;}
+        .MAIN a:link,a:actived,a:visited{text-decoration:none;}
+        .MENU {font-size: 12px; color:white}
+        .MENU a{text-decoration:none;color:white;}
+        .MENU a:hover{text-decoration:none;color:red;}
+        .MENU a:link,a:actived,a:visited{text-decoration:none;}
+        -->
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div align="center">
+        <table width="1002" border="0" cellspacing="0">
+            <tr>
+              <td width="1000" height="26" valign="top" class="NORMAL" style="text-align: right">
+                  &nbsp;管理员ID：<asp:Label ID="lbAdmin" runat="server" Text="用户名"></asp:Label>
+                  &nbsp; &nbsp; &nbsp; &nbsp;
+                  <asp:HyperLink ID="lbLogout" runat="server" NavigateUrl="~/Default.aspx?log=out">注销</asp:HyperLink></td>
+            </tr>
+            <tr>
+              <td height="26" valign="top" style="text-align: center" background="./admin_head.gif" class="MENU">
+                  <asp:HyperLink ID="lbCP" runat="server" NavigateUrl="~/admin/CheckNews.aspx">审核文章</asp:HyperLink>&nbsp;&nbsp;
+                  &nbsp;
+                  <asp:HyperLink ID="lbCR" runat="server" NavigateUrl="~/admin/CheckUser.aspx">审核账号</asp:HyperLink>
+                  &nbsp;&nbsp;&nbsp;
+                  <asp:HyperLink ID="HyperLink1" runat="server" Text="部门管理"  NavigateUrl="~/admin/Department.aspx"></asp:HyperLink>
+                  &nbsp;&nbsp;
+                  <asp:HyperLink ID="lbCD" runat="server" NavigateUrl="~/admin/ModifyMemo.aspx">修改简介</asp:HyperLink>
+                  &nbsp;&nbsp;
+                  <asp:HyperLink ID="lbPR" runat="server" NavigateUrl="~/admin/Recommend.aspx">人物推荐</asp:HyperLink>
+                  &nbsp;&nbsp;&nbsp;
+                  <asp:HyperLink ID="lbDL" runat="server" Text="下载管理" NavigateUrl="~/admin/AdminDownLoad.aspx"></asp:HyperLink></td>
+            </tr>
+            <tr><div align="center">
+                &nbsp;</div>
+              <td valign="top" class="MAIN">
+                <asp:contentplaceholder id="ContentPlaceHolder1" runat="server">
+                    <br />
+                    <br />
+                    <br />
+                </asp:contentplaceholder>
+              </td>
+            </tr>
+          </table>
+    </div>
+    </form>
+</body>
+</html>

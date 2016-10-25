@@ -1,0 +1,19 @@
+﻿<controls:ChildWindow x:Class="IMWebClient.ChildWebDisk"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="601" Height="440" 
+           Title="我的网盘" Closed="ChildWindow_Closed">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ListBox Name="lbFiles"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Button Content="上传新文档" HorizontalAlignment="Stretch" Name="fileUpload" VerticalAlignment="Stretch" Click="fileUpload_Click" />
+        </Grid>
+    </Grid>
+</controls:ChildWindow>

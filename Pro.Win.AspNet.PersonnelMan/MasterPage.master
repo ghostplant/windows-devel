@@ -1,0 +1,246 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>人事管理系统</title>
+    <style type="text/css">
+        <!--
+        .NORMAL {font-size: 12px; color:#FF0000}
+        .MENULIST {font-size: 16px; color:#FF0000}
+        .LABEL {font-size:12px; color:#FFFFFF}
+        .MAIN {font-size:14px; color:#000000}
+        .MAIN a{text-decoration:none;color:blue;}
+        .MAIN a:hover{text-decoration:none;color:red;}
+        .MAIN a:link,a:actived,a:visited{text-decoration:none;}
+        .IGNORE {font-size:12px; color:#333333}
+        .BEAUTY {font-family: "微软雅黑"; font-size: 12px; color:#0000FF}
+        -->
+    </style>
+    <style type="text/css">
+        .nav a{text-decoration:none;color:white;}
+        .nav a:hover{text-decoration:none;color:red;}
+        .nav a:link,a:actived,a:visited{text-decoration:none;}
+        .lst a{text-decoration:none;color:green;}
+        .lst a:hover{text-decoration:none;color:red;}
+        .lst a:link,a:actived,a:visited{text-decoration:none;}
+        .com a{text-decoration:none;color:black;}
+        .com a:hover{text-decoration:none;color:black;}
+        .com a:link,a:actived,a:visited{text-decoration:none;}
+    </style>
+</head>
+<body>
+  <div align="center">
+    <form id="form_master" runat="server">
+    <table width="1000" border="0" cellspacing="0">
+      <tr>
+        <td valign="top">
+        <img src="Resources/title.bmp" />
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" style="height: 40px">
+        <table width="1003" border="0" cellspacing="0" class="LABEL" style="height: 27px">
+          <tr class="nav">
+            <td valign="top" style="width: 214px; height: 20px;" background="./Resources/blue.jpg">&nbsp;</td>
+            <td valign="top" style="width: 10px; height: 20px;" background="./Resources/border.jpg">&nbsp;</td>
+            <td align="center" valign="middle" style="width: 111px; height: 20px;" background="./Resources/label.jpg">
+                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="Default.aspx">首页</asp:HyperLink></td>
+            <td align="center" valign="middle" style="width: 111px; height: 20px;" background="./Resources/label.jpg">
+                <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="Company.aspx">公司详情</asp:HyperLink></td>
+            <td align="center" valign="middle" style="width: 111px; height: 20px;" background="./Resources/label.jpg">
+                <asp:LinkButton ID="HyperLink3" runat="server" OnClick="HyperLink3_Click">新闻资讯</asp:LinkButton></td>
+            <td align="center" valign="middle" style="width: 111px; height: 20px;" background="./Resources/label.jpg">
+                <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="WorkerList.aspx">人员简介</asp:HyperLink></td>
+            <td align="center" valign="middle" style="width: 111px; height: 20px;" background="./Resources/label.jpg">
+                <asp:HyperLink ID="Downloads" runat="server" NavigateUrl="Downloads.aspx">下载专区</asp:HyperLink></td>
+            <td valign="top" style="width: 10px; height: 20px;" background="./Resources/border.jpg">&nbsp;</td>
+            <td valign="top" style="width: 214px; height: 20px;" background="./Resources/blue.jpg">&nbsp;</td>
+          </tr>
+        </table>
+            <table width="1003" border="0" cellspacing="0">
+               <tr>
+                 <td width="238" valign="top">
+                 <table width="235" border="0" cellspacing="0">
+                  <tr>
+                    <td valign="top" height="24" background="Resources/login.jpg">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td valign="top" bgcolor="#A5C4E2" style="height: 200px">
+                        <asp:Panel ID="Panel1" runat="server" Height="50px" Width="125px">
+                    
+                    <table width="238" border="0" cellspacing="0" style="height: 179px" class="NORMAL">
+                      <tr>
+                        <td valign="top" style="height: 87px"><table border="0" cellspacing="0" style="width: 234px; height: 104px">
+                          <tr>
+                            <td style="width: 84px; height: 25px">
+                                用户名：</td>
+                            <td style="height: 25px; width: 107px;">
+                                <asp:TextBox ID="logUser" runat="server" Height="25px" Width="100px"></asp:TextBox></td>
+                            <td style="height: 25px; width: 68px;">
+                                &nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td style="width: 84px; height: 25px">
+                                密码：</td>
+                            <td style="height: 21px; width: 107px;">
+                                <asp:TextBox ID="logPswd" runat="server" Height="25px" Width="100px" TextMode="Password"></asp:TextBox></td>
+                            <td style="height: 21px; width: 68px;">
+                                </td>
+                          </tr>
+                          <tr>
+                          <div align="center">
+                            <td style="width: 84px; height:34px">验证码：</td>
+                            <td style="width: 107px; height: 34px;">
+                                <asp:TextBox ID="logComf" runat="server" Height="25px" Width="100px"></asp:TextBox></td>
+                            <td style="width: 68px; height: 34px;" class="com">
+                                <asp:LinkButton ID="comfBuild" runat="server" Font-Bold="True" Font-Names="Comic Sans MS" OnClick="comfBuild_Click" ToolTip="点击换一组验证码" ></asp:LinkButton></td>
+                          </div>
+                          </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td height="37" valign="top">
+                            <hr><div align="center">
+                            <asp:RadioButton ID="rbUser" runat="server" Checked="True" GroupName="level" Text="用户" />&nbsp;
+                            <asp:RadioButton ID="rbAdmin" runat="server" GroupName="level" Text="管理员" /><br />
+                            <asp:Label ID="txtTag" runat="server"></asp:Label></div></td>
+                      </tr>
+                      <tr>
+                        <div align="center">
+                        <td valign="top" align="center" style="height: 21px">
+                            <asp:Button ID="btnLogin" runat="server" Text="登陆" OnClick="btnLogin_Click" />&nbsp;
+                            <asp:Button ID="btnRegister" runat="server" Text="注册" OnClick="btnRegister_Click" /></td></div>
+                      </tr>
+                    </table>
+                        </asp:Panel>
+                        <asp:Panel ID="Panel2" runat="server" Height="50px" Width="125px">
+                            <table width="238" border="0" cellspacing="0" style="height: 179px" class="NORMAL">
+                                <tr>
+                                    <td valign="top" style="height: 50px">
+                                        尊敬的&nbsp;
+                                        <asp:Label ID="usrName" runat="server" Text="XXXX"></asp:Label>，您好！<br />
+                                        <br />
+                                        您的身份是：
+                                        <asp:Label ID="usrLevel" runat="server" Text="普通用户"></asp:Label></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" style="height: 20px">
+                                        您有
+                                        <asp:Label ID="msgCount" runat="server" Text="ZZZZ"></asp:Label>
+                                        条未读消息。</td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" style="height: 21px">
+                                        <asp:Button ID="btnLogout" runat="server" Text="注销" OnClick="btnLogout_Click" /></td>
+                                </tr>
+                            </table>
+                        </asp:Panel>
+                        </td>
+                  </tr>
+                  <tr>
+                    <td valign="top" height="10">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td valign="top" height="24" background="Resources/menu.jpg">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td valign="top" bgcolor="#A5C4E2" class="MENULIST" style="height: 10px">
+                    <div align="center" class="lst">
+                        <asp:Panel ID="Panel4" runat="server">
+                            &lt;您还没有登录&gt;</asp:Panel>
+                        <br />
+                        <span style="font-family: 楷体">&nbsp;</span><span style="font-family: 楷体"><br />
+                        </span>
+                        <asp:Panel ID="Panel3" runat="server">
+                            <span style="font-family: 楷体" class="nav"><strong>[个人功能]<br /><br />
+                            </strong>
+                            <a href="Publish.aspx">
+                            发表文章</a><br />
+                        <br />
+                            <a href="Register.aspx">
+                            修改资料</a><br />
+                        <br />
+                            <a href="SendNote.aspx">
+                            发送消息</a><br />
+                        <br />
+                            <a href="ReadNote.aspx">
+                            查看消息</a></span><br />
+                        </asp:Panel>
+                        </div>
+                        <br />
+                        <br />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top">
+                      <p align="center" class="BEAUTY"><a href="#" onclick="javascript:this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.personnel.com/');return false;">设为首页</a></p>
+                      <p align="center" class="BEAUTY"><a href="mailto:cuiwei_weifang@163.com">联系我们</a></p>
+                      <p align="center" class="BEAUTY"><a href="javascript:alert('感谢您收藏本站');window.external.AddFavorite(url,title);">收藏本站</a></p>
+                      <p align="center" class="BEAUTY"><a href="javascript:window.close()">退出</a></p>
+                    </td>
+                  </tr>
+                </table>
+                 </td>
+                 <td valign="top" align="left" style="width: 585px" class="MAIN">
+                    <div>
+                        <asp:contentplaceholder id="Main_Information" runat="server">
+                        </asp:contentplaceholder>
+                    </div>
+                </td>
+                 <td width="180" valign="top">
+                 <table width="180" border="0" cellspacing="0">
+                  <tr>
+                    <td background="Resources/lb_renwu.jpg" style=" height: 45px; width: 180px;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 180px; height: 320px" background="Resources/lb_rest.jpg" valign="top">
+                        <asp:DataList ID="PersonList" runat="server" Width="102px" CssClass="MAIN">
+                            <ItemTemplate>
+                                <div align="center">
+                                <asp:HyperLink ID="nameItem" runat="server" Text='<%# Eval("name") %>' NavigateUrl='<%# "PersonDescr.aspx?id="+Eval("id") %>'></asp:HyperLink><br />
+                                <br />
+                                </div>
+                            </ItemTemplate>
+                        </asp:DataList>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 180px; height: 20px">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="width: 209px">
+                    <a href="Publish.aspx"><img src="Resources/submit.jpg" /></a>
+                    </td>
+                  </tr>
+                </table>
+                     <strong>
+                     </strong>
+                            </td>
+               </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" style="height: 21px; text-align: center">
+            <asp:TextBox ID="TextSearch" runat="server" Width="600px"></asp:TextBox>
+            &nbsp;
+            <asp:Button ID="btnSearch" runat="server" Text="文章搜索" OnClick="btnSearch_Click" /></td>
+      </tr>
+      <tr>
+        <td valign="top" style="height: 20px; text-align: center;"><img src="Resources/bottom.jpg" width="1003" height="184" /></td>
+      </tr>
+      <tr>
+        <td valign="top" style="text-align: center">
+            <div align="center" class="IGNORE">
+               <p>关于：人事管理系统</p>
+               <p>作者：崔嵬&nbsp;&nbsp;班级：09065501（软件工程01班）&nbsp;&nbsp;学号：0911080114</p>
+            </div>
+        </td>
+      </tr>
+    </table>
+    </form>
+  </div>
+</body>
+</html>

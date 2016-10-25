@@ -1,0 +1,22 @@
+﻿<controls:ChildWindow x:Class="IMWebClient.MessageWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="400" Height="242" 
+           Title="提示信息">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button x:Name="OKButton" Content="确定" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Left" Margin="159,0,0,12" Grid.Row="1">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF79F89D" Offset="0" />
+                    <GradientStop Color="White" Offset="1" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <TextBlock Height="135" HorizontalAlignment="Left" Margin="20,12,0,0" Name="txtMessage" Text="无信息" VerticalAlignment="Top" Width="332" TextWrapping="Wrap" Foreground="#86FF0000" FontSize="15" FontWeight="Normal" />
+    </Grid>
+</controls:ChildWindow>

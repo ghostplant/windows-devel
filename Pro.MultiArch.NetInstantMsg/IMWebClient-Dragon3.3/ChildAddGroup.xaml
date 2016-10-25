@@ -1,0 +1,13 @@
+﻿<controls:ChildWindow x:Class="IMWebClient.ChildAddGroup"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="333" Height="130" 
+           Title="新建一个分组" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Button Click="CancelButton_Click" Content="取消" Height="23" HorizontalAlignment="Right" Margin="0,53,25,19" Name="CancelButton" Width="75" />
+        <Button Click="OKButton_Click" Content="确定" Height="23" HorizontalAlignment="Right" Margin="0,53,121,19" Name="OKButton" Width="75" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="96,10,0,0" Name="textName" VerticalAlignment="Top" Width="194" />
+        <sdk:Label Content="分组名称：" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label1" VerticalAlignment="Top" Width="80" />
+    </Grid>
+</controls:ChildWindow>

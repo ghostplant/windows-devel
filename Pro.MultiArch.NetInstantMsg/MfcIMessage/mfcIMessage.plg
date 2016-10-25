@@ -1,0 +1,57 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: mfcIMessage - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\GHOSTP~1\AppData\Local\Temp\RSP2C51.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "_UNICODE" /Fp"Release/mfcIMessage.pch" /Yu"stdafx.h" /Fo"Release/" /c 
+"D:\mfcIMessage\mfcIMessage.cpp"
+"D:\mfcIMessage\mfcIMessageDlg.cpp"
+"D:\mfcIMessage\MsgChatDlg.cpp"
+"D:\mfcIMessage\TreeList.cpp"
+]
+Creating command line "cl.exe @C:\Users\GHOSTP~1\AppData\Local\Temp\RSP2C51.tmp" 
+Creating temporary file "C:\Users\GHOSTP~1\AppData\Local\Temp\RSP2C52.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "_UNICODE" /Fp"Release/mfcIMessage.pch" /Yc"stdafx.h" /Fo"Release/" /c 
+"D:\mfcIMessage\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\GHOSTP~1\AppData\Local\Temp\RSP2C52.tmp" 
+Creating temporary file "C:\Users\GHOSTP~1\AppData\Local\Temp\RSP2C53.tmp" with contents
+[
+/nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:no /pdb:"Release/mfcIMessage.pdb" /machine:I386 /out:"Release/mfcIMessage.exe" 
+.\Release\mfcIMessage.obj
+.\Release\mfcIMessageDlg.obj
+.\Release\MsgChatDlg.obj
+.\Release\StdAfx.obj
+.\Release\TreeList.obj
+.\Release\mfcIMessage.res
+]
+Creating command line "link.exe @C:\Users\GHOSTP~1\AppData\Local\Temp\RSP2C53.tmp"
+<h3>Output Window</h3>
+Compiling...
+cl: 命令行 warning D9035 :“GX”选项已否决，并将在将来的版本中移除
+cl: 命令行 warning D9036 :使用“EHsc”而不使用“GX”
+StdAfx.cpp
+ WINVER not defined. Defaulting to 0x0502 (Windows Server 2003)
+Compiling...
+cl: 命令行 warning D9035 :“GX”选项已否决，并将在将来的版本中移除
+cl: 命令行 warning D9036 :使用“EHsc”而不使用“GX”
+mfcIMessage.cpp
+mfcIMessageDlg.cpp
+MsgChatDlg.cpp
+TreeList.cpp
+正在生成代码...
+Linking...
+
+
+
+<h3>Results</h3>
+mfcIMessage.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

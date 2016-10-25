@@ -1,0 +1,27 @@
+﻿<controls:ChildWindow x:Class="IMWebClient.ChildRegWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="400" Height="300" 
+           Title="注册用户" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button x:Name="CancelButton" Content="取消" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
+        <Button x:Name="OKButton" Content="确定" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
+        <sdk:Label Height="17" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="106" Content="新账号(1-20字符)：" />
+        <sdk:Label Content="新昵称(1-20字符)：" Height="17" HorizontalAlignment="Left" Margin="12,50,0,0" Name="label2" VerticalAlignment="Top" Width="106" />
+        <sdk:Label Content="性别：" Height="17" HorizontalAlignment="Left" Margin="12,91,0,0" Name="label3" VerticalAlignment="Top" Width="43" />
+        <sdk:Label Content="设置密码：" Height="17" HorizontalAlignment="Left" Margin="12,132,0,0" Name="label4" VerticalAlignment="Top" Width="55" />
+        <sdk:Label Content="密码确认：" Height="17" HorizontalAlignment="Left" Margin="12,169,0,0" Name="label5" VerticalAlignment="Top" Width="55" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="124,8,0,0" Name="tbIdentity" VerticalAlignment="Top" Width="225" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="124,44,0,0" Name="tbNickname" VerticalAlignment="Top" Width="225" />
+        <PasswordBox Height="23" HorizontalAlignment="Left" Margin="124,128,0,0" Name="tbPassword" VerticalAlignment="Top" Width="225" />
+        <PasswordBox Height="23" HorizontalAlignment="Left" Margin="124,165,0,0" Name="tbConfirm" VerticalAlignment="Top" Width="225" />
+        <RadioButton Content="男" Height="16" HorizontalAlignment="Left" Margin="127,91,0,0" Name="rbMale" VerticalAlignment="Top" IsChecked="True" />
+        <RadioButton Content="女" Height="16" HorizontalAlignment="Left" Margin="240,92,0,0" Name="radioButton2" VerticalAlignment="Top" />
+    </Grid>
+</controls:ChildWindow>

@@ -1,0 +1,18 @@
+格式：key,    data[0] - data[1] - ... - data[data.Length-1]
+
+第一个模块(分组添加、删除)的所有协议:
+
+(1)TranslateMessage中接受到的消息：
+执行昵称设置："nick",  [用户昵称]
+执行性别设置："gender", [是否是男性]
+执行提示信息："error", [提示信息内容]
+执行分组创建："crtgroup", [组ID]-[组名称]-[是否是普通组]
+执行分组更名："chggroup", [组ID]-[组新名称]
+执行分组删除："delroup", [组ID]
+
+(2)SendMessage可以发送的消息：
+请求昵称更名："rennick",  [用户新昵称]
+请求性别更改："rengender",  [新性别是否是男]
+请求分组新建："addgroup", [组名称]-[是否是普通组]
+请求分组更名："rengroup", [组ID]-[组新名称]
+请求分组删除："rmgroup", [组ID]

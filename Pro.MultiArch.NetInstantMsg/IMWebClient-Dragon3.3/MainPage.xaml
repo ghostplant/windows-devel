@@ -1,0 +1,64 @@
+﻿<navigation:Page x:Class="IMWebClient.MainPage" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           mc:Ignorable="d"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           d:DesignWidth="640" d:DesignHeight="480"
+           Title="MainPage Page" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="0.7*"  />
+            <ColumnDefinition Width="0.3*"  />
+        </Grid.ColumnDefinitions>
+        <Grid Margin="5" Grid.Column="0">
+            <sdk:TabControl OpacityMask="#B1000000">
+                <sdk:TabControl.Background>
+                    <ImageBrush ImageSource="/IMWebClient;component/Images/paintingBlue.jpg" />
+                </sdk:TabControl.Background>
+            </sdk:TabControl>
+            <MediaElement AutoPlay="False" Height="0" HorizontalAlignment="Left" Margin="0,464,0,0" Name="sound_msg" VerticalAlignment="Top" Width="0" Source="msg.mp3" />
+            <MediaElement AutoPlay="False" Height="0" HorizontalAlignment="Left" Margin="0,464,0,0" Name="sound_log" VerticalAlignment="Top" Width="0" Source="mlg.mp3" />
+            <sdk:Label Height="22" HorizontalAlignment="Left" Margin="20,20,0,0" Name="label1" VerticalAlignment="Top" Width="60" Content="信号强度：" Foreground="#ECFFFFFF" />
+            <ProgressBar Height="22" HorizontalAlignment="Left" Margin="86,17,0,0" Name="progressBar1" VerticalAlignment="Top" Width="86" Value="75" />
+            <HyperlinkButton Content="下载桌面端应用" Height="23" HorizontalAlignment="Right" Margin="0,0,0,16" Name="hyperlink" VerticalAlignment="Bottom" Width="89" Click="hyperlink_Click" />
+            <HyperlinkButton Content="下载JAVA通用手机版应用 1.0 Beta" HorizontalAlignment="Right" Height="23" Margin="0,0,8,35" Name="javalink" VerticalAlignment="Bottom" Click="javalink_Click" Foreground="#FFD8D173" FontWeight="Bold" FontStyle="Normal" FontStretch="Normal" FontFamily="Comic Sans MS" />
+            <HyperlinkButton Content="修改个人资料" Height="23" HorizontalAlignment="Right" Margin="0,58,0,0" Name="Modify" VerticalAlignment="Top" Width="89" Click="Modify_Click" />
+            <HyperlinkButton Content="注销当前账号" Height="23" HorizontalAlignment="Right" Margin="0,81,0,0" Name="Logoff" VerticalAlignment="Top" Width="89" Click="Logoff_Click" />
+            <sdk:Label Height="53" HorizontalAlignment="Center" Margin="20,93,6,0" Name="label2" VerticalAlignment="Top" Width="412" FontFamily="Portable User Interface" FontWeight="Bold" FontStretch="Normal" FontStyle="Italic" FontSize="32" Content="Njust Instant Message" Foreground="#740000FF" />
+            <sdk:Label Content="南理工即时通讯应用（龙年贺岁版）" FontFamily="Portable User Interface" FontSize="18" FontStretch="Normal" FontStyle="Normal" FontWeight="Bold" Foreground="#83FF8F00" Height="30" HorizontalAlignment="Center" Margin="96,142,26,0" Name="label3" VerticalAlignment="Top" Width="315" />
+            <TextBlock Height="33" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="3,0,87,6" Name="label4" VerticalAlignment="Bottom" Width="348" Text="友情提示：对分组和好友的管理请通过对指定分组右键菜单进行操作。" Foreground="#FFB4F200" />
+            <HyperlinkButton Height="29" Content="立刻“搜索好友”！(NEW)" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,6,16,0" Name="hyperlinkButton1" Foreground="#CDFFFFFF" FontWeight="Bold" FontSize="14" Click="hyperlinkButton1_Click" />
+            <HyperlinkButton Height="29" Content="立刻“打开网盘”！(NEW)" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,33,16,0" Name="WebDisk" Foreground="#CDFFFFFF" FontWeight="Bold" FontSize="14" Click="WebDisk_Click" />
+        </Grid>
+        <Grid Margin="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="43*" />
+                <ColumnDefinition Width="139*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <sdk:Label Name="NickName" Grid.ColumnSpan="2" FontSize="22" HorizontalContentAlignment="Center">
+                <sdk:Label.Background>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <GradientStop Color="#1F8F9D9D" Offset="0" />
+                        <GradientStop Color="#00000000" Offset="1" />
+                    </LinearGradientBrush>
+                </sdk:Label.Background>
+            </sdk:Label>
+            <sdk:TreeView Grid.Row="1" Name="friendsList" MouseRightButtonDown="LayoutRoot_MouseRightButtonDown"  Grid.ColumnSpan="2" FontSize="20" Grid.RowSpan="2">
+                <sdk:TreeView.Background>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <GradientStop Color="#1F8F9D9D" Offset="0" />
+                        <GradientStop Color="#00000000" Offset="1" />
+                    </LinearGradientBrush>
+                </sdk:TreeView.Background>
+            </sdk:TreeView>
+        </Grid>
+    </Grid>
+</navigation:Page>
